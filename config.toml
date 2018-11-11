@@ -1,47 +1,58 @@
-baseURL = "https://www.davidwang.com/"
+baseurl = "https://www.davidwang.com/"
 languageCode = "en-us"
 title = "David C Wang"
-theme = "minimal"
-disqusShortname = "" # delete this to disable disqus comments
-googleAnalytics = ""
+theme = "blackburn"
+author = "David C Wang"
+copyright = "&copy; 2018. All rights reserved."
+canonifyurls = true
+paginate = 10
+
+[indexes]
+  tag = "tags"
+  topic = "topics"
 
 [params]
-    author = "David C Wang"
-    description = "Personal Blog"
-    githubUsername = "" # leave empty string and explicitly provide org or user for repos
-    accent = "red"
-    showBorder = true
-    backgroundColor = "white"
-    font = "Raleway" # should match the name on Google Fonts!
-    highlight = true
-    highlightStyle = "solarized-dark"
-    highlightLanguages = ["bash", "go", "python"]
+  # Shown in the home page
+  subtitle = "Blog & Website"
+  brand = "David C Wang"
+  googleAnalytics = "UA-129089054-1"
+  disqus = ""
+  # CSS name for highlight.js
+  highlightjs = "androidstudio"
+  dateFormat = "02 Jan 2006, 15:04"
 
-[[menu.main]]
-    url = "/"
+[menu]
+  # Shown in the side menu.
+  [[menu.main]]
     name = "Home"
+    pre = "<i class='fa fa-home fa-fw'></i>"
     weight = 1
-
-[[menu.main]]
-    url = "/post/"
+    identifier = "home"
+    url = "/"
+  [[menu.main]]
     name = "Posts"
+    pre = "<i class='fa fa-list fa-fw'></i>"
     weight = 2
-
-[[menu.main]]
-    url = "/project/"
-    name = "Projects"
+    identifier = "post"
+    url = "/post/"
+  [[menu.main]]
+    name = "About"
+    pre = "<i class='fa fa-user fa-fw'></i>"
     weight = 3
-
-# Social icons to be shown on the right-hand side of the navigation bar
-# The "name" field should match the name of the icon to be used
-# The list of available icons can be found at http://fontawesome.io/icons/
-
-[[menu.icon]]
-    url = "https://github.com/dcwangmit01/"
-    name = "github"
-    weight = 2
-
-[[menu.icon]]
-    url = "https://www.linkedin.com/in/dcwangmit01/"
-    name = "linkedin"
+    identifier = "about"
+    url = "/about/"
+  [[menu.main]]
+    name = "Contact"
+    pre = "<i class='fa fa-phone fa-fw'></i>"
     weight = 4
+    url = "/contact/"
+
+[social]
+  # Link your social networking accouns to the side menu
+  # by entering your username or ID.
+  twitter = "dcwangmit01"
+  facebook = "dcwangmit01"
+  instagram = "dcwangmit01"
+  github = "dcwangmit01"
+  stackoverflow = "dcwangmit01"
+  linkedin = "dcwangmit01"
