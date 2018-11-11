@@ -36,16 +36,21 @@ paginate = 10
     identifier = "post"
     url = "/post/"
   [[menu.main]]
+    name = "Projects"
+    pre = "<i class='fa fa-list fa-fw'></i>"
+    weight = 3
+    url = "/projects/"
+  [[menu.main]]
+    name = "Resume"
+    pre = "<i class='fa fa-file fa-fw'></i>"
+    weight = 4
+    url = "/resume/"
+  [[menu.main]]
     name = "About"
     pre = "<i class='fa fa-user fa-fw'></i>"
-    weight = 3
+    weight = 5
     identifier = "about"
     url = "/about/"
-  [[menu.main]]
-    name = "Contact"
-    pre = "<i class='fa fa-phone fa-fw'></i>"
-    weight = 4
-    url = "/contact/"
 
 [social]
   # Link your social networking accouns to the side menu
@@ -54,5 +59,5 @@ paginate = 10
   facebook = "dcwangmit01"
   instagram = "dcwangmit01"
   github = "dcwangmit01"
-  stackoverflow = "dcwangmit01"
+  stackoverflow = "5213030"
   linkedin = "dcwangmit01"
