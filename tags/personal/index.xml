@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Personal on David C Wang</title>
+    <link>https://www.davidwang.com/tags/personal/</link>
+    <description>Recent content in Personal on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Sun, 11 Nov 2018 11:11:11 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/personal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Resume</title>
+      <link>https://www.davidwang.com/resume/</link>
+      <pubDate>Sun, 11 Nov 2018 11:11:11 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/resume/</guid>
+      <description>Resume  Click to download  
+
+
+
+Links to Company Web Sites Premier Retail Networks 
+Aruba Networks 
+Instant802 Networks (now known as Devicescape) 
+MIT Laboratory for Computer Science (now known as Computer Science Artificial Intelligence Lab)</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>https://www.davidwang.com/projects/</link>
+      <pubDate>Mon, 01 Jan 2018 01:01:01 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/projects/</guid>
+      <description> Kubernetes Development Kit  Docker image with pre-installed cloud tools https://github.com/cisco-sso/kdk  Personal dotfiles  Dotfiles compatible with YADM https://github.com/dcwangmit01/yadm-dotfiles  </description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://www.davidwang.com/about/</link>
+      <pubDate>Fri, 20 Aug 2010 23:34:50 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/about/</guid>
+      <description>Overview Passionate about building software systems and applying methods that minimize operational burden. Engineer and manager with enough experience developing and operating 24&amp;frasl;7 public cloud services to have learned endless empathy for operations and quality.
+Currently working as a Software Architect tasked with modernizing an organization hooked on legacy technologies, to recent technologies including Docker and Kubernetes.</description>
+    </item>
+    
+  </channel>
+</rss>

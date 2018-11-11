@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Networking on David C Wang</title>
+    <link>https://www.davidwang.com/tags/networking/</link>
+    <description>Recent content in Networking on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Mon, 30 Aug 2010 02:17:38 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Secure OpenVPN Routing between Multiple Networks using DD-WRT</title>
+      <link>https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/</link>
+      <pubDate>Mon, 30 Aug 2010 02:17:38 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/</guid>
+      <description>Description I&amp;rsquo;ve created a secure routed VPN network between all of my family&amp;rsquo;s home networks. Here&amp;rsquo;s what it looks like, followed by how I did it.
+DD-WRT Network Diagram   Here&amp;rsquo;s an overview of the components:
+ Home Network  OpenVPN concentrator Netgear WNR3500L (480Mhz CPU, 8MB Flash, 64MB RAM) DD-WRT Mega/Big (Includes OpenVPN), with jffs enabled Local Network: 192.168.1.0/24 Dynamic DNS: xxxx.dyndns.org  Remote Client Networks 1 and 2  OpenVPN client Linksys WRT54G (266Mhz CPU, 4MB Flash, 16MB RAM) DD-WRT VPN (Includes OpenVPN), with jffs enabled Client Network 1  Local Network: 192.</description>
+    </item>
+    
+    <item>
+      <title>My Home Network</title>
+      <link>https://www.davidwang.com/post/my-home-network/</link>
+      <pubDate>Fri, 20 Aug 2010 23:34:50 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/my-home-network/</guid>
+      <description>I spend too much time on my home network infrastructure, but it is too much fun&amp;hellip; Components to brag about include:
+ Embedded linux on a wireless access point Vpn concentrator and clients using certificate authentication to route between family member networks Virtual server and multiple virtual guest machines Fully automated backup process for all data Fileserver for nfs and samba filesharing Web servers which run wordpress, mediawiki Reverse proxies    Home Network Diagram   I used the Dia utility to draw a great-looking diagram of my home network.</description>
+    </item>
+    
+  </channel>
+</rss>

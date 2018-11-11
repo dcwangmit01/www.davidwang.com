@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.davidwang.com/resume/</loc>
+    <lastmod>2018-11-11T11:11:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/projects/</loc>
+    <lastmod>2018-01-01T01:01:01+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/</loc>
+    <lastmod>2016-05-21T00:11:37+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/</loc>
+    <lastmod>2010-08-30T02:17:38+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/about/</loc>
+    <lastmod>2010-08-20T23:34:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/my-home-network/</loc>
+    <lastmod>2010-08-20T23:34:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/cisco-vpn-client-on-dd-wrt-wireless-router/</loc>
+    <lastmod>2010-07-31T07:44:13+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/tunneling-pop3-smtp-xinetd-linux/</loc>
+    <lastmod>2010-06-29T06:16:25+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/ansible/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/bare-metal/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/ceph/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/cisco/</loc>
+    <lastmod>2010-07-31T07:44:13+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/container/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/</loc>
+    <lastmod>2018-11-11T11:11:11+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/ddwrt/</loc>
+    <lastmod>2010-08-30T02:17:38+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/docker/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/gmail/</loc>
+    <lastmod>2010-06-29T06:16:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/kubernetes/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/linux/</loc>
+    <lastmod>2010-07-31T07:44:13+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/networking/</loc>
+    <lastmod>2010-08-30T02:17:38+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/openvpn/</loc>
+    <lastmod>2010-08-30T02:17:38+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/packet.net/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/personal/</loc>
+    <lastmod>2018-11-11T11:11:11+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/post/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/routing/</loc>
+    <lastmod>2010-08-30T02:17:38+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/stunnel/</loc>
+    <lastmod>2010-06-29T06:16:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/</loc>
+    <lastmod>2016-05-24T20:59:47+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/technical/</loc>
+    <lastmod>2016-05-21T00:11:37+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/topics/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/vm/</loc>
+    <lastmod>2010-08-20T23:34:50+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/vpn/</loc>
+    <lastmod>2010-07-31T07:44:13+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.davidwang.com/tags/xinetd/</loc>
+    <lastmod>2010-06-29T06:16:25+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

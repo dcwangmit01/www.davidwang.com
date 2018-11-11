@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.48" />
+
+  <title>Cisco VPN Client on DD-WRT Wireless Router &middot; David C Wang</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.davidwang.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.davidwang.com/img/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.davidwang.com/">David C Wang</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/projects/"><i class='fa fa-list fa-fw'></i>Projects</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/resume/"><i class='fa fa-file fa-fw'></i>Resume</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" target="_blank"><i class="fa fa-facebook-square fa-fw"></i>Facebook</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" target="_blank"><i class="fa fa-linkedin-square fa-fw"></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/dcwangmit01" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Cisco VPN Client on DD-WRT Wireless Router</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>31 Jul 2010, 07:44</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/technical">technical</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/linux">linux</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/vpn">vpn</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/ddwrt">ddwrt</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/cisco">cisco</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  <p>If you connect to a network served by a Cisco VPN concentrator, then you can run the Cisco VPN client on a router, instead of your computer. Running Cisco VPN on a router creates several advantages:</p>
+
+<ul>
+<li>Masquerades (NAT) the local network so that all computers behind the router can access the VPN network</li>
+<li>Re-connects on dropped connections.</li>
+<li>Splits and sends only traffic destined to the foreign network over the VPN connection.</li>
+</ul>
+
+<p>Requirements:</p>
+
+<ul>
+<li>Router that supports DD-WRT: Netgear WNR3500L</li>
+<li>DD-WRT Firmware containing vpnc: dd-wrt.v24-14311_NEWD-2_K2.6_openvpn.bin</li>
+<li>Journaling Flash Filesystem (JFFS) enabled on the router</li>
+</ul>
+
+<p>Add the following to the startup script under Administration -&gt; Commands -&gt; Startup</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sleep <span style="color:#ae81ff">15</span>
+cat /jffs/vpnc.txt | sh</code></pre></div>
+
+<p>Create the file /jffs/vpnc.txt on the router</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/vpnc
+echo <span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">#!/bin/sh 
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Set all Variables
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">vpn_concentrator=&#34;vpn.company.com&#34;  # ip or hostname of ipsec vpn concentrator
+</span><span style="color:#e6db74">vpn_keepalive_host=&#34;10.1.1.1&#34; # the ip or hostname of a computer, reachable if vpn is established
+</span><span style="color:#e6db74">vpn_groupname=&#34;group_name&#34;         # group name hereconnection
+</span><span style="color:#e6db74">vpn_grouppasswd=&#34;group_password&#34; # group password here
+</span><span style="color:#e6db74">vpn_username=&#34;user_name&#34;             # your username here
+</span><span style="color:#e6db74">vpn_password=&#34;user_password&#34;     # your password here
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create a local script to split routes
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74">CISCO_SPLIT_INC=1
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_ADDR=10.0.0.0  # IP range to go into first tunnel
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_MASK=255.0.0.0 # Subnet Mask for first tunnel
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_MASKLEN=8      # Mask length
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_PROTOCOL=0
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_SPORT=0
+</span><span style="color:#e6db74">CISCO_SPLIT_INC_0_DPORT=0
+</span><span style="color:#e6db74">. /etc/vpnc/vpnc-script
+</span><span style="color:#e6db74">&#34; &gt; /tmp/etc/vpnc/vpnc-script-local
+</span><span style="color:#e6db74">chmod a+x /tmp/etc/vpnc/vpnc-script-local
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the vpnc.conf file
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74">IPSec gateway $vpn_concentrator
+</span><span style="color:#e6db74">IPSec ID $vpn_groupname
+</span><span style="color:#e6db74">IPSec secret $vpn_grouppasswd
+</span><span style="color:#e6db74">Xauth username $vpn_username
+</span><span style="color:#e6db74">Xauth password $vpn_password
+</span><span style="color:#e6db74">Script /tmp/etc/vpnc/vpnc-script-local  # points to the local script
+</span><span style="color:#e6db74">&#34; &gt; /tmp/etc/vpnc/vpnc.conf
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the vpnc.sh file
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">pingtest () {
+</span><span style="color:#e6db74"> ping -q -c1 $1 &gt;&gt; /dev/null
+</span><span style="color:#e6db74"> if [ &#34;$?&#34; == &#34;0&#34; ]; then
+</span><span style="color:#e6db74">       echo 1 #reachable 
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"> else
+</span><span style="color:#e6db74">       echo 0 #not reachable
+</span><span style="color:#e6db74"> fi
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">while [ true ]; do
+</span><span style="color:#e6db74">  # wait until the concentrator is reachable
+</span><span style="color:#e6db74">  while [ &#34;`pingtest $vpn_concentrator`&#34; != &#34;1&#34; ]; do
+</span><span style="color:#e6db74">    echo &#34;Vpnc concentrator $vpn_concentrator is not reachable, sleeping 10&#34;
+</span><span style="color:#e6db74">    sleep 10;
+</span><span style="color:#e6db74">  done
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  if [ &#34;`pingtest $vpn_keepalive_host`&#34; == &#34;1&#34; ]; then
+</span><span style="color:#e6db74">    echo &#34;vpn connection active: $vpn_keepalive_host is alive&#34;
+</span><span style="color:#e6db74">    sleep 300;
+</span><span style="color:#e6db74">  else
+</span><span style="color:#e6db74">    echo &#34;vpn connection down: $vpn_keepalive_host is unreachable&#34;
+</span><span style="color:#e6db74">    vpnc-disconnect
+</span><span style="color:#e6db74">    echo &#34;Attempting to start vpnc&#34;
+</span><span style="color:#e6db74">    vpnc /tmp/etc/vpnc/vpnc.conf --dpd-idle 0
+</span><span style="color:#e6db74">    tundev=&#34;`ifconfig |grep tun |cut -b 1-4|tail -n 1`&#34;
+</span><span style="color:#e6db74">    iptables -A FORWARD -o $tundev -j ACCEPT
+</span><span style="color:#e6db74">    iptables -A FORWARD -i $tundev -j ACCEPT
+</span><span style="color:#e6db74">    iptables -t nat -A POSTROUTING -o $tundev -j MASQUERADE
+</span><span style="color:#e6db74">  fi
+</span><span style="color:#e6db74">  sleep 1;
+</span><span style="color:#e6db74">done
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">return 0;
+</span><span style="color:#e6db74">&#39;</span> &gt; /tmp/etc/vpnc/vpnc.sh
+chmod a+x /tmp/etc/vpnc/vpnc.sh
+/tmp/etc/vpnc/vpnc.sh</code></pre></div>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://www.davidwang.com/post/tunneling-pop3-smtp-xinetd-linux/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://www.davidwang.com/post/tunneling-pop3-smtp-xinetd-linux/">Tunneling pop3/smtp to gmail SSL pop3s/smtps using xinetd on Linux</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://www.davidwang.com/post/my-home-network/">My Home Network</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://www.davidwang.com/post/my-home-network/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://www.davidwang.com/js/ui.js"></script>
+
+
+<script>
+  
+  if (window.location.hostname != "localhost") {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-129089054-1', 'auto');
+    ga('send', 'pageview');
+  }
+</script>
+
+
+
+
+
+</body>
+</html>
+

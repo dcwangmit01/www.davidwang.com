@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on David C Wang</title>
+    <link>https://www.davidwang.com/tags/</link>
+    <description>Recent content in Tags on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 24 May 2016 20:59:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ansible</title>
+      <link>https://www.davidwang.com/tags/ansible/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bare Metal</title>
+      <link>https://www.davidwang.com/tags/bare-metal/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/bare-metal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ceph</title>
+      <link>https://www.davidwang.com/tags/ceph/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/ceph/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cisco</title>
+      <link>https://www.davidwang.com/tags/cisco/</link>
+      <pubDate>Sat, 31 Jul 2010 07:44:13 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/cisco/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Container</title>
+      <link>https://www.davidwang.com/tags/container/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/container/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ddwrt</title>
+      <link>https://www.davidwang.com/tags/ddwrt/</link>
+      <pubDate>Mon, 30 Aug 2010 02:17:38 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/ddwrt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://www.davidwang.com/tags/docker/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gmail</title>
+      <link>https://www.davidwang.com/tags/gmail/</link>
+      <pubDate>Tue, 29 Jun 2010 06:16:25 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/gmail/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://www.davidwang.com/tags/kubernetes/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://www.davidwang.com/tags/linux/</link>
+      <pubDate>Sat, 31 Jul 2010 07:44:13 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Networking</title>
+      <link>https://www.davidwang.com/tags/networking/</link>
+      <pubDate>Mon, 30 Aug 2010 02:17:38 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Openvpn</title>
+      <link>https://www.davidwang.com/tags/openvpn/</link>
+      <pubDate>Mon, 30 Aug 2010 02:17:38 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/openvpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Packet.net</title>
+      <link>https://www.davidwang.com/tags/packet.net/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/packet.net/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Personal</title>
+      <link>https://www.davidwang.com/tags/personal/</link>
+      <pubDate>Sun, 11 Nov 2018 11:11:11 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/personal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Routing</title>
+      <link>https://www.davidwang.com/tags/routing/</link>
+      <pubDate>Mon, 30 Aug 2010 02:17:38 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/routing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stunnel</title>
+      <link>https://www.davidwang.com/tags/stunnel/</link>
+      <pubDate>Tue, 29 Jun 2010 06:16:25 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/stunnel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Technical</title>
+      <link>https://www.davidwang.com/tags/technical/</link>
+      <pubDate>Sat, 21 May 2016 00:11:37 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/technical/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vm</title>
+      <link>https://www.davidwang.com/tags/vm/</link>
+      <pubDate>Fri, 20 Aug 2010 23:34:50 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/vm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vpn</title>
+      <link>https://www.davidwang.com/tags/vpn/</link>
+      <pubDate>Sat, 31 Jul 2010 07:44:13 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/vpn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xinetd</title>
+      <link>https://www.davidwang.com/tags/xinetd/</link>
+      <pubDate>Tue, 29 Jun 2010 06:16:25 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/tags/xinetd/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

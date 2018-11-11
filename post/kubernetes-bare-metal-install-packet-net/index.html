@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.48" />
+
+  <title>Kubernetes Bare-Metal Install (on Packet.net) &middot; David C Wang</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.davidwang.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.davidwang.com/img/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.davidwang.com/">David C Wang</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/projects/"><i class='fa fa-list fa-fw'></i>Projects</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/resume/"><i class='fa fa-file fa-fw'></i>Resume</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" target="_blank"><i class="fa fa-facebook-square fa-fw"></i>Facebook</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" target="_blank"><i class="fa fa-linkedin-square fa-fw"></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/dcwangmit01" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Kubernetes Bare-Metal Install (on Packet.net)</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>21 May 2016, 00:11</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/bare-metal">bare-metal</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/kubernetes">kubernetes</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/packet.net">packet.net</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/technical">technical</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/ansible">ansible</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/bare-metal">bare-metal</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/ceph">ceph</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/container">container</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/docker">docker</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/kubernetes">kubernetes</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/packet.net">packet.net</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<p>Installing Kubernetes on bare-metal machines is dead simple, and a million times easier than installing OpenStack. The bulk of the instructions below involve setting up the bare-metal machines on <a href="https://packet.net">packet.net</a>.</p>
+
+<h2 id="what-you-ll-get-with-these-instructions">What You&rsquo;ll Get with These Instructions</h2>
+
+<p>One may use these instructions to create a <em>basic</em> Kubernetes cluster. In order to create a cluster environment equivalent to a hosted solution (GKE) or turn-key solutions (Kubernetes on AWS or GCE), you&rsquo;ll need persistent volume and load-balancer support. A future post will cover how to setup persistent volume storage as a Ceph RBD cluster, and how to work around the need for external load-balancer integration by deploying a Kubernetes Ingress DaemonSet with DNS.</p>
+
+<p>In the following guide, we&rsquo;ll build a Kubernetes cluster with 1 master and 2 nodes.</p>
+
+<h2 id="bare-metal-or-cloud-vms-all-the-same">Bare-Metal or Cloud VMs, All the Same</h2>
+
+<p>These instructions should also work cloud VMs, so long as the following criterial are met:</p>
+
+<ul>
+<li>All machines are network reachable, without restriction
+
+<ul>
+<li>i.e. open iptables, open security groups</li>
+</ul></li>
+<li>Root access through password-less SSH is enabled
+
+<ul>
+<li>i.e. configured /root/.ssh/authorized_keys</li>
+</ul></li>
+</ul>
+
+<p>Because not many of us have multiple bare-metal machines laying around, we&rsquo;ll rent them from <a href="https://packet.net">packet.net</a>.</p>
+
+<h2 id="step-summary">Step Summary</h2>
+
+<ul>
+<li>Setup a Development Environment</li>
+<li>Provision Bare-Metal Machines (on packet.net)</li>
+<li>Configure and Run the Kubernetes <a href="https://github.com/kubernetes/contrib">contrib/ansible</a> scripts</li>
+<li>Test the Cluster by Creating a POD</li>
+<li>Configure a Remote Kubernetes Client to Talk to the Cluster</li>
+</ul>
+
+<h2 id="setup-a-development-environment">Setup a Development Environment</h2>
+
+<p>The easiest method is to instantiate a <a href="https://github.com/dcwangmit01/vagrant-devenv">vagrant machine</a> with all of the necessary tools. Feel free to do this manually. The vagrant environment includes the following:</p>
+
+<ul>
+<li>Docker</li>
+<li>Kubectl</li>
+<li>Ansible</li>
+<li>Hashicorp Terraform</li>
+</ul>
+
+<p>Fetch the vagrant machine</p>
+
+<pre><code># Tested at dcwangmit01/vagrant-devenv - branch master, commit a6c65478
+git clone git@github.com:dcwangmit01/vagrant-devenv
+cd vagrant-devenv
+</code></pre>
+
+<p>If you are on OSX, ensure and install the host dependencies.</p>
+
+<pre><code># Installs brew, virtualbox, etc.
+make deps
+</code></pre>
+
+<p>Create your vagant environment</p>
+
+<pre><code># Start ssh-agent and load your key
+eval `ssh-agent`; ssh-add
+
+# Create the vagrant machine
+vagrant up
+
+# Connect to the box
+vagrant ssh
+</code></pre>
+
+<p>Note: From now on, do everything from within this vagrant machine.</p>
+
+<h2 id="provision-bare-metal-machines-on-packet-net">Provision Bare-Metal Machines (on packet.net)</h2>
+
+<p>The <a href="https://github.com/kubernetes/contrib">contrib/ansible</a> scripts are targeted to offical Redhat distributions including RHEL and Fedora. However, packet.net does not currently support these operating systems. Thus, we deploy Centos7 servers, which is the next-closest thing and happens to work.</p>
+
+<p>If you enjoy clicking around Web UI&rsquo;s, follow the manual instructions below. Otherwise, the only automated provisioning method supported by <a href="https://packet.net">packet.net</a> is to use Hashicorp Terraform. A CLI client does not yet exist.</p>
+
+<h3 id="manual-webui-instructions">Manual WebUI Instructions</h3>
+
+<ul>
+<li>Login to the web UI at <a href="https://packet.net">packet.net</a></li>
+<li>Create a project</li>
+<li>Set an SSH key (which will be provisioned on new servers)</li>
+<li>Create 3 servers with Centos7</li>
+<li>Note the names and IPs of the newly created machines</li>
+</ul>
+
+<h3 id="automated-instructions-using-terraform">Automated Instructions (using Terraform)</h3>
+
+<p>Instantiating servers via Hashicorp Terraform must happen in two steps if a &#8220;packet&#95;project&#8221; has not yet been created.</p>
+
+<p>This is because the &#8220;packet&#95;device&#8221; (aka. bare metal machine) definitions require a &#8220;project&#95;id&#8221; upon execution. However, one does not know the &#8220;project&#95;id&#8221; until after the &#8220;packet&#95;project&#8221; has been created. One might resolve this issue in the future by having the packet&#95;device require a project&#95;name instead of a project&#95;id. Then we could &#8220;terraform apply&#8221; this file in one go.</p>
+
+<p>See the Appendix for curl commands that will help you discover project&#95;ids from the API.</p>
+
+<h4 id="step-1-create-the-packet-net-project">Step 1: Create the Packet.net Project</h4>
+
+<p>First, create your auth token via the <a href="https://packet.net">packet.net</a> UI and note it down.</p>
+
+<p>Create a cluster.tf, and tweak the {variables} according to your needs.</p>
+
+<pre><code># Configure the Packet Provider
+provider &quot;packet&quot; {
+        auth_token = &quot;{REPLACE_WITH_AUTH_TOKEN}&quot;
+}
+
+# Create a new SSH key
+#   You may have to stage an ssh key on the vagrant box,
+#     or run &quot;ssh-keygen -b 4096&quot; to create a new key.
+#   This key specified below will be auto-added to the 
+#     /root/.ssh/authorized_keys of newly provisioned machines.
+resource &quot;packet_ssh_key&quot; &quot;{REPLACE_WITH_A_NAME_FOR_SSH_KEY}&quot; {
+    name = &quot;{REPLACE_WITH_A_NAME_FOR_SSH_KEY}&quot;
+    public_key = &quot;${file(&quot;/{REPLACE_WITH_PATH_TO_SSH_KEY}&quot;)}&quot;
+}
+
+# Create a project
+resource &quot;packet_project&quot; &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot; {
+        name = &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot;
+}
+</code></pre>
+
+<p>Run Terraform to create the project.</p>
+
+<pre><code>terraform plan -out cluster
+terraform apply
+</code></pre>
+
+<h4 id="step-2-create-the-packet-net-machines">Step 2: Create the Packet.net Machines</h4>
+
+<p>Locate your PACKET&#95;PROJECT&#95;ID, so that you may embed it in the cluster.tf Terraform file.</p>
+
+<pre><code># Locate your API Key from the Web Portal https://app.packet.net/
+export PACKET_AUTH={REPLACE_WITH_AUTH_TOKEN}
+
+# Get a list of projects
+curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/projects |python -m json.tool
+
+# Search the output above for the PACKET_PROJECT_ID
+#   and use it in the packet_device definitions below
+</code></pre>
+
+<p>Append to cluster.tf, and tweak the {variables} according to your needs.</p>
+
+<pre><code># Create a device
+resource &quot;packet_device&quot; &quot;kube-master-0001&quot; {
+        hostname = &quot;kube-master-0001&quot;
+        plan = &quot;baremetal_0&quot;
+        facility = &quot;ewr1&quot;
+        operating_system = &quot;centos_7&quot;
+        billing_cycle = &quot;hourly&quot;
+        project_id = &quot;{REPLACE_WITH_PACKET_PROJECT_ID}&quot;
+}
+
+resource &quot;packet_device&quot; &quot;kube-node-0001&quot; {
+        hostname = &quot;kube-node-0001&quot;
+        plan = &quot;baremetal_0&quot;
+        facility = &quot;ewr1&quot;
+        operating_system = &quot;centos_7&quot;
+        billing_cycle = &quot;hourly&quot;
+        project_id = &quot;{REPLACE_WITH_PACKET_PROJECT_ID}&quot;
+}
+
+resource &quot;packet_device&quot; &quot;kube-node-0002&quot; {
+        hostname = &quot;kube-node-0002&quot;
+        plan = &quot;baremetal_0&quot;
+        facility = &quot;ewr1&quot;
+        operating_system = &quot;centos_7&quot;
+        billing_cycle = &quot;hourly&quot;
+        project_id = &quot;{REPLACE_WITH_PACKET_PROJECT_ID}&quot;
+}
+</code></pre>
+
+<p>Run Terraform</p>
+
+<pre><code>terraform plan -out cluster
+terraform apply
+</code></pre>
+
+<p>Note the names and IPs of the newly created machines</p>
+
+<pre><code>cat terraform.tfstate|grep -E '(hostname|network.0.address)'
+# Returns something like this
+# &quot;hostname&quot;: &quot;kube-master-0001&quot;,
+# &quot;network.0.address&quot;: &quot;147.75.199.63&quot;,
+# &quot;hostname&quot;: &quot;kube-node-0001&quot;,
+# &quot;network.0.address&quot;: &quot;147.75.199.131&quot;,
+# &quot;hostname&quot;: &quot;kube-node-0002&quot;,
+# &quot;network.0.address&quot;: &quot;147.75.196.83&quot;,
+</code></pre>
+
+<p>Create an ~/.ssh/config file with the hostname to IP mappings. This allows you to refer to the machines via hostnames from your Dev box, as well as Ansible inventory definitions.</p>
+
+<pre><code>Host kube-master-0001
+  User root
+  Hostname {REPLACE_WITH_IP_OF_kube-master-0001}
+Host kube-node-0001
+  User root
+  Hostname {REPLACE_WITH_IP_OF_kube-node-0001}
+Host kube-node-0002
+  User root
+  Hostname {REPLACE_WITH_IP_OF_kube-node-0002}
+</code></pre>
+
+<h2 id="configure-and-run-the-kubernetes-contrib-ansible-scripts">Configure and Run the Kubernetes contrib/ansible Scripts</h2>
+
+<p>Fetch the kubernetes/contrib code</p>
+
+<pre><code># Tested at kubernetes/contrib commit 3634e300
+git clone git@github.com:kubernetes/contrib.git
+cd contrib/ansible
+</code></pre>
+
+<p>Create an Ansible inventory file (more info in the contrib/ansible/README.md file)</p>
+
+<pre><code># Create the inventory file from the example
+cp inventory.example.single_master inventory
+
+# Edit the inventory file and fill in the hostnames or IP addresses
+emacs inventory
+</code></pre>
+
+<p>Example &#8220;inventory&#8221; file, which will work without modification if ~/.ssh/config is configured with host IP mappings.</p>
+
+<pre><code># configure the master IPs
+[masters]
+kube-master-0001
+
+# the following section should be the same as the [masters] above
+[etcd]
+kube-master-0001
+
+# configure the node IPs
+[nodes]
+kube-node-0001
+kube-node-0002
+</code></pre>
+
+<p>Test the ansible connection, and accept host-keys into your knownhosts</p>
+
+<pre><code>ansible all -u root -i inventory -m ping
+</code></pre>
+
+<p>Configure group&#95;vars/all.yml to set the ansible&#95;ssh&#95;user to &#8220;root&#8221;</p>
+
+<pre><code># The following will uncomment &quot;#ansible_ssh_user: root&quot;
+sed -i 's@^#ansible_ssh_user@ansible_ssh_user@' group_vars/all.yml
+</code></pre>
+
+<p>Run the ansible setup script to install Kubernetes on all machines</p>
+
+<pre><code>./setup.sh
+</code></pre>
+
+<p>&#42; Run this more than once until zero errors. It&rsquo;s idempotent!</p>
+
+<h2 id="test-the-cluster-by-creating-a-pod">Test the Cluster by Creating a POD</h2>
+
+<p>The kubernetes master is auto-configured to talk with the cluster. Run some test commands</p>
+
+<pre><code>ssh root@kube-master-0001
+kubectl cluster-info
+kubectl get po,rc,svc
+</code></pre>
+
+<p>Create a POD, and test that it is running</p>
+
+<pre><code># Start a POD
+kubectl run echoheaders --image=gcr.io/google_containers/echoserver:1.3 --port=8080
+# Find the pod ID
+kubectl get po
+# Start a new bash process within the first container within the pod
+kubeclt exec -it {THE_POD_ID} bash
+# Make a call
+curl localhost:8080
+# Exit with {ctrl-d}
+</code></pre>
+
+<h2 id="configure-a-remote-kubernetes-client-to-talk-to-the-cluster">Configure a Remote Kubernetes Client to Talk to the Cluster</h2>
+
+<p>Now that the kubernetes cluster has been setup, you may use &#8220;kubectl&#8221; directly after ssh&rsquo;ing to the master. However, it would be nice to use &#8220;kubectl&#8221; from the vagrant dev environment.</p>
+
+<pre><code># Copy the kube/config from the master to your dev machine
+scp root@kube-master-0001:/etc/kubernetes/kubectl.kubeconfig ~/.kube/config.pkt
+
+# Rename the context-name to be &quot;pkt-east&quot;
+sed -i 's@kubectl-to-cluster.local@pkt-east@' ~/.kube/config.pkt
+
+# Set the search/merge path for KUBECONFIG
+export KUBECONFIG=~/.kube/config.pkt:~/.kube/config
+
+# Verify the context by looking at ~/.kube/config.pkt
+less ~/.kube/config.pkt
+
+# Set the context
+kubectl config use-context pkt-east
+
+# Verify the context
+kubectl config current-context
+
+# Run a some commands to verify that it all works
+kubectl get svc,rc,po
+</code></pre>
+
+<ul>
+<li>Now you have a working kubernetes cluster on Packet.net
+
+<ul>
+<li>Excluding persistent storage and load-balancing</li>
+</ul></li>
+</ul>
+
+<h2 id="appendix">Appendix</h2>
+
+<h3 id="curl-commands">Curl Commands</h3>
+
+<pre><code># Locate your API Key from the Web Portal https://app.packet.net/
+export PACKET_AUTH={REPLACE_WITH_API_KEY}
+
+# Get a list of projects
+curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/projects |python -m json.tool |less
+
+# Get a list of plans (aka flavors)
+curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/plans |python -m json.tool|less
+
+# Get a list of facilities
+curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/facilities |python -m json.tool|less
+
+# Get a list of operating systems
+curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/operating-systems |python -m json.tool|less
+</code></pre>
+
+<h3 id="example-settings">Example Settings</h3>
+
+<pre><code># Plan IDs
+baremetal_0 baremetal_1
+
+# Facilities
+sjc1 ewr1
+
+# Operating Systems
+centos_7
+</code></pre>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/">Secure OpenVPN Routing between Multiple Networks using DD-WRT</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/">Ceph RBD Bare-Metal Install for Kubernetes (on Packet.net)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://www.davidwang.com/js/ui.js"></script>
+
+
+<script>
+  
+  if (window.location.hostname != "localhost") {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-129089054-1', 'auto');
+    ga('send', 'pageview');
+  }
+</script>
+
+
+
+
+
+</body>
+</html>
+

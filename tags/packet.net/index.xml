@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Packet.net on David C Wang</title>
+    <link>https://www.davidwang.com/tags/packet.net/</link>
+    <description>Recent content in Packet.net on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Tue, 24 May 2016 20:59:47 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/packet.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ceph RBD Bare-Metal Install for Kubernetes (on Packet.net)</title>
+      <link>https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/</link>
+      <pubDate>Tue, 24 May 2016 20:59:47 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/</guid>
+      <description>In this guide, we&amp;#8217;ll create a bare-metal Ceph RBD cluster which may provide persistent volume support for a Kubernetes environment.
+Our Ceph RBD cluster will be composed of a single Ceph monitor (MON) and two Ceph Object Storage Daemon (OSD) nodes. In Ceph, MON nodes track the state of the cluster, and OSD nodes hold the data to be persisted.
+Kubernetes and the Need for Ceph RBD Creating a Kubernetes cluster environment equivalent to hosted solutions (GKE) and turn-key solutions (Kubernetes on AWS or GCE) requires 3 things:</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Bare-Metal Install (on Packet.net)</title>
+      <link>https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/</link>
+      <pubDate>Sat, 21 May 2016 00:11:37 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/</guid>
+      <description>Installing Kubernetes on bare-metal machines is dead simple, and a million times easier than installing OpenStack. The bulk of the instructions below involve setting up the bare-metal machines on packet.net.
+What You&amp;rsquo;ll Get with These Instructions One may use these instructions to create a basic Kubernetes cluster. In order to create a cluster environment equivalent to a hosted solution (GKE) or turn-key solutions (Kubernetes on AWS or GCE), you&amp;rsquo;ll need persistent volume and load-balancer support.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Bare-Metal Install (on Packet.net)</title>
+      <link>https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/</link>
+      <pubDate>Sat, 21 May 2016 00:11:37 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/</guid>
+      <description>Installing Kubernetes on bare-metal machines is dead simple, and a million times easier than installing OpenStack. The bulk of the instructions below involve setting up the bare-metal machines on packet.net.
+What You&amp;rsquo;ll Get with These Instructions One may use these instructions to create a basic Kubernetes cluster. In order to create a cluster environment equivalent to a hosted solution (GKE) or turn-key solutions (Kubernetes on AWS or GCE), you&amp;rsquo;ll need persistent volume and load-balancer support.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on David C Wang</title>
+    <link>https://www.davidwang.com/tags/linux/</link>
+    <description>Recent content in Linux on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Sat, 31 Jul 2010 07:44:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cisco VPN Client on DD-WRT Wireless Router</title>
+      <link>https://www.davidwang.com/post/cisco-vpn-client-on-dd-wrt-wireless-router/</link>
+      <pubDate>Sat, 31 Jul 2010 07:44:13 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/cisco-vpn-client-on-dd-wrt-wireless-router/</guid>
+      <description>If you connect to a network served by a Cisco VPN concentrator, then you can run the Cisco VPN client on a router, instead of your computer. Running Cisco VPN on a router creates several advantages:
+ Masquerades (NAT) the local network so that all computers behind the router can access the VPN network Re-connects on dropped connections. Splits and sends only traffic destined to the foreign network over the VPN connection.</description>
+    </item>
+    
+    <item>
+      <title>Tunneling pop3/smtp to gmail SSL pop3s/smtps using xinetd on Linux</title>
+      <link>https://www.davidwang.com/post/tunneling-pop3-smtp-xinetd-linux/</link>
+      <pubDate>Tue, 29 Jun 2010 06:16:25 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/tunneling-pop3-smtp-xinetd-linux/</guid>
+      <description>My Brother MFC-9840cdw multi-functional printer/scanner/coper/fax can scan to email. However gmail requires SSL, which the printer is not able to support. Using xinetd and openssl, my Linux machine is able to proxy local pop3 requests to gmail&amp;rsquo;s SSL pop3s service, and local smtp requests to gmail&amp;rsquo;s SSL smtps service.
+Here are the basics on what you need. These ideas are not original.
+Tunneling smtp to smtps
+# xinetd: tunnel local smtp to gmail smtps service smtp { disable = no socket_type = stream wait = no user = root server = /etc/xinetd.</description>
+    </item>
+    
+  </channel>
+</rss>

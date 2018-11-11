@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vm on David C Wang</title>
+    <link>https://www.davidwang.com/tags/vm/</link>
+    <description>Recent content in Vm on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 20 Aug 2010 23:34:50 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/vm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My Home Network</title>
+      <link>https://www.davidwang.com/post/my-home-network/</link>
+      <pubDate>Fri, 20 Aug 2010 23:34:50 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/my-home-network/</guid>
+      <description>I spend too much time on my home network infrastructure, but it is too much fun&amp;hellip; Components to brag about include:
+ Embedded linux on a wireless access point Vpn concentrator and clients using certificate authentication to route between family member networks Virtual server and multiple virtual guest machines Fully automated backup process for all data Fileserver for nfs and samba filesharing Web servers which run wordpress, mediawiki Reverse proxies    Home Network Diagram   I used the Dia utility to draw a great-looking diagram of my home network.</description>
+    </item>
+    
+  </channel>
+</rss>

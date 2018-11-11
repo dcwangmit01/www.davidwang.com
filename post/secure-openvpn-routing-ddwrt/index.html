@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.48" />
+
+  <title>Secure OpenVPN Routing between Multiple Networks using DD-WRT &middot; David C Wang</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.davidwang.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.davidwang.com/img/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.davidwang.com/">David C Wang</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/projects/"><i class='fa fa-list fa-fw'></i>Projects</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/resume/"><i class='fa fa-file fa-fw'></i>Resume</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" target="_blank"><i class="fa fa-facebook-square fa-fw"></i>Facebook</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" target="_blank"><i class="fa fa-linkedin-square fa-fw"></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/dcwangmit01" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Secure OpenVPN Routing between Multiple Networks using DD-WRT</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>30 Aug 2010, 02:17</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/technical">technical</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/networking">networking</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/routing">routing</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/ddwrt">ddwrt</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/openvpn">openvpn</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<h2 id="description">Description</h2>
+
+<p>I&rsquo;ve created a secure routed VPN network between all of my family&rsquo;s home networks.  Here&rsquo;s what it looks like, followed by how I did it.</p>
+
+<p><strong>DD-WRT Network Diagram</strong>
+
+<figure>
+    
+        <img src="ddwrt_openvpn.png" />
+    
+    
+</figure>
+</p>
+
+<p>Here&rsquo;s an overview of the components:</p>
+
+<ul>
+<li>Home Network
+
+<ul>
+<li>OpenVPN concentrator</li>
+<li>Netgear WNR3500L (480Mhz CPU, 8MB Flash, 64MB RAM)</li>
+<li>DD-WRT Mega/Big (Includes OpenVPN), with jffs enabled</li>
+<li>Local Network: 192.168.1.0/24</li>
+<li>Dynamic DNS: xxxx.dyndns.org</li>
+</ul></li>
+<li>Remote Client Networks 1 and 2
+
+<ul>
+<li>OpenVPN client</li>
+<li>Linksys WRT54G (266Mhz CPU, 4MB Flash, 16MB RAM)</li>
+<li>DD-WRT VPN (Includes OpenVPN), with jffs enabled</li>
+<li>Client Network 1
+
+<ul>
+<li>Local Network: 192.168.2.0/24</li>
+<li>Dynamic DNS: yyyy.dyndns.org</li>
+</ul></li>
+<li>Client Network 2
+
+<ul>
+<li>Local Network: 192.168.3.0/24</li>
+<li>Dynamic DNS: zzzz.dyndns.org</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h2 id="generate-the-certificates">Generate the Certificates</h2>
+
+<p>First, install OpenVPN on your development machine</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install openvpn</code></pre></div>
+
+<p>Second, run this little script to create a server certificate and several client certificates. These certificates will be directly used in the OpenVPN concentrator and client configuration files.  You will need a single unique client certificate for every OpenVPN client that will connect to the OpenVPN server. When running this script, accept defaults for all of the prompts.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+mydir<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pwd<span style="color:#e6db74">`</span>
+mydate<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>date +%Y%m%d%H%M<span style="color:#e6db74">`</span>
+mykeygendir<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$mydir<span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>mydate<span style="color:#e6db74">}</span><span style="color:#e6db74">_keygen&#34;</span>
+
+echo mykeysdir
+
+cp -r /usr/share/doc/openvpn/examples/easy-rsa/2.0 $mykeygendir
+pushd .
+cd $mykeygendir
+source ./vars
+export KEY_COUNTRY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;US&#34;</span>
+export KEY_PROVINCE<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CA&#34;</span>
+export KEY_CITY<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;San Francisco&#34;</span>
+export KEY_ORG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yourdomain.com&#34;</span>
+export KEY_EMAIL<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;you@yourdomain.com&#34;</span>
+export KEY_CN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yourdomain.com&#34;</span>
+export KEY_OU<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yourdomain.com&#34;</span>
+export KEY_NAME<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;yourdomain.com&#34;</span>
+
+yes <span style="color:#e6db74">&#34;&#34;</span> | ./clean-all
+yes <span style="color:#e6db74">&#34;&#34;</span> | ./build-ca
+./build-key client1
+./build-key client2
+./build-key client3
+./build-key client4
+./build-key client5
+./build-key client6
+./build-key client7
+./build-key client8
+./build-key client9
+./build-key-server server
+./build-dh</code></pre></div>
+
+<h2 id="home-network-openvpn-concentrator">Home Network OpenVPN Concentrator</h2>
+
+<p>Add the following to DD-WRT -&gt; Administration -&gt; Commands -&gt; Startup</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sleep <span style="color:#ae81ff">15</span>
+cat /jffs/openvpn_server.txt | sh</code></pre></div>
+
+<p>Customize and copy the file contents under the DD-WRT flash path: /jffs/openvpn_server.txt.</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/openvpn/ccd
+echo <span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">#!/bin/sh
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Set all Variables
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">lan_network=192.168.1.0
+</span><span style="color:#e6db74">vpn_network=192.168.100.0
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the openvpn.conf file
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74"># Tunnel options
+</span><span style="color:#e6db74">mode server     # Set OpenVPN major mode
+</span><span style="color:#e6db74">proto udp       # Setup the protocol
+</span><span style="color:#e6db74">port 1194       # TCP/UDP port number
+</span><span style="color:#e6db74">dev tun         # TUN/TAP virtual network device
+</span><span style="color:#e6db74">keepalive 15 60 # Simplify the expression of --ping
+</span><span style="color:#e6db74">daemon          # Become a daemon after all initialization
+</span><span style="color:#e6db74">verb 3          # Set output verbosity to n
+</span><span style="color:#e6db74">comp-lzo        # Use fast LZO compression
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># vpn tun subnet info
+</span><span style="color:#e6db74">server $vpn_network 255.255.255.0
+</span><span style="color:#e6db74">push &#34;route $lan_network 255.255.255.0&#34;
+</span><span style="color:#e6db74">push &#34;route 192.168.2.0 255.255.255.0&#34;
+</span><span style="color:#e6db74">push &#34;route 192.168.3.0 255.255.255.0&#34;
+</span><span style="color:#e6db74">route 192.168.2.0 255.255.255.0
+</span><span style="color:#e6db74">route 192.168.3.0 255.255.255.0
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># OpenVPN server mode options
+</span><span style="color:#e6db74">client-to-client # tells OpenVPN to internally route client-to-client traffic
+</span><span style="color:#e6db74">duplicate-cn     # Allow multiple clients with the same common name
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># TLS Mode Options
+</span><span style="color:#e6db74">tls-server       # Enable TLS and assume server role during TLS handshake
+</span><span style="color:#e6db74">ca ca.crt        # Certificate authority (CA) file
+</span><span style="color:#e6db74">dh dh1024.pem    # File containing Diffie Hellman parameters
+</span><span style="color:#e6db74">cert server.crt  # Signed certificate of local peers
+</span><span style="color:#e6db74">key server.key   # Private key of local peers
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">client-config-dir /tmp/etc/openvpn/ccd/
+</span><span style="color:#e6db74">&#34; &gt; openvpn.conf
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74">iroute 192.168.2.0 255.255.255.0
+</span><span style="color:#e6db74">&#34; &gt; ccd/client1
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74">iroute 192.168.3.0 255.255.255.0
+</span><span style="color:#e6db74">&#34; &gt; ccd/client2
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the key files
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN CERTIFICATE-----
+</span><span style="color:#e6db74">&lt;PASTE CA.CRT CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END CERTIFICATE-----&#34; &gt; ca.crt
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN RSA PRIVATE KEY-----
+</span><span style="color:#e6db74">&lt;PASTE SERVER.KEY CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END RSA PRIVATE KEY-----&#34; &gt; server.key
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN CERTIFICATE-----
+</span><span style="color:#e6db74">&lt;PASTE SERVER.CRT CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END CERTIFICATE-----&#34; &gt; server.crt
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN DH PARAMETERS-----
+</span><span style="color:#e6db74">&lt;PASTE DH1024.PEM CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END DH PARAMETERS-----&#34; &gt; dh1024.pem
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Set the firewall rules
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">iptables -I INPUT -p udp --dport 1194 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I INPUT -i tun+ -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -i tun+ -j ACCEPT
+</span><span style="color:#e6db74">iptables -I INPUT -s $vpn_network/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s $vpn_network/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.1.0/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.2.0/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.3.0/24 -j ACCEPT
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Start the program
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># The command [openvpn --config openvpn.conf --daemon] does not work so use the following
+</span><span style="color:#e6db74">sleep 2
+</span><span style="color:#e6db74">ln -s /usr/sbin/openvpn /tmp/etc/openvpn/openvpn
+</span><span style="color:#e6db74">/tmp/etc/openvpn/openvpn --config /tmp/etc/openvpn/openvpn.conf
+</span><span style="color:#e6db74">&#39;</span> &gt; /tmp/etc/openvpn/openvpn.sh
+chmod a+x /tmp/etc/openvpn/openvpn.sh
+cd /tmp/etc/openvpn
+./openvpn.sh</code></pre></div>
+
+<h2 id="remote-network-openvpn-clients">Remote Network OpenVPN Clients</h2>
+
+<p>Add the following to DD-WRT -&gt; Administration -&gt; Commands -&gt; Startup</p>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/openvpn
+echo <span style="color:#e6db74">&#39;
+</span><span style="color:#e6db74">#!/bin/sh
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Set all Variables
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">lan_network=192.168.2.0
+</span><span style="color:#e6db74">vpn_network=192.168.100.0
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the openvpn.conf file
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;
+</span><span style="color:#e6db74"># Tunnel options
+</span><span style="color:#e6db74">proto udp       # Setup the protocol
+</span><span style="color:#e6db74">port 1194       # TCP/UDP port number
+</span><span style="color:#e6db74">dev tun         # TUN/TAP virtual network device
+</span><span style="color:#e6db74">keepalive 15 60 # Simplify the expression of --ping
+</span><span style="color:#e6db74">daemon          # Become a daemon after all initialization
+</span><span style="color:#e6db74">verb 3          # Set output verbosity to n
+</span><span style="color:#e6db74">comp-lzo        # Use fast LZO compression
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># vpn tun subnet info
+</span><span style="color:#e6db74">pull            # Fetch the routes from the server
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># TLS Mode Options
+</span><span style="color:#e6db74">tls-client       # Enable TLS and assume client role during TLS handshake
+</span><span style="color:#e6db74">ca ca.crt        # Certificate authority (CA) file
+</span><span style="color:#e6db74">cert client.crt  # Signed certificate of local peers
+</span><span style="color:#e6db74">key client.key   # Private key of local peers
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">remote aaaa.dyndns.org
+</span><span style="color:#e6db74">resolv-retry infinite
+</span><span style="color:#e6db74">nobind
+</span><span style="color:#e6db74">&#34; &gt; openvpn.conf
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Create the key files
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN CERTIFICATE-----
+</span><span style="color:#e6db74">&lt;PASTE CA.CRT CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END CERTIFICATE-----&#34; &gt; ca.crt
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN RSA PRIVATE KEY-----
+</span><span style="color:#e6db74">&lt;PASTE CLIENT.KEY CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END RSA PRIVATE KEY-----&#34; &gt; client.key
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">echo &#34;-----BEGIN CERTIFICATE-----
+</span><span style="color:#e6db74">&lt;PASTE CLIENT.CRT CONTENTS HERE&gt;
+</span><span style="color:#e6db74">-----END CERTIFICATE-----&#34; &gt; client.crt
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Set the firewall rules
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">iptables -I INPUT -p udp --dport 1194 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I INPUT -i tun+ -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -i tun+ -j ACCEPT
+</span><span style="color:#e6db74">iptables -I INPUT -s /24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s /24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.1.0/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.2.0/24 -j ACCEPT
+</span><span style="color:#e6db74">iptables -I FORWARD -s 192.168.3.0/24 -j ACCEPT
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">#### Start the program
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74"># The command [openvpn --config openvpn.conf --daemon] does not work so use the following
+</span><span style="color:#e6db74">sleep 2
+</span><span style="color:#e6db74">ln -s /usr/sbin/openvpn /tmp/etc/openvpn/openvpn
+</span><span style="color:#e6db74">/tmp/etc/openvpn/openvpn --config /tmp/etc/openvpn/openvpn.conf
+</span><span style="color:#e6db74">&#39;</span> &gt; /tmp/etc/openvpn/openvpn.sh
+chmod a+x /tmp/etc/openvpn/openvpn.sh
+cd /tmp/etc/openvpn
+./openvpn.sh</code></pre></div>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://www.davidwang.com/post/my-home-network/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://www.davidwang.com/post/my-home-network/">My Home Network</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/">Kubernetes Bare-Metal Install (on Packet.net)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://www.davidwang.com/post/kubernetes-bare-metal-install-packet-net/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://www.davidwang.com/js/ui.js"></script>
+
+
+<script>
+  
+  if (window.location.hostname != "localhost") {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-129089054-1', 'auto');
+    ga('send', 'pageview');
+  }
+</script>
+
+
+
+
+
+</body>
+</html>
+
