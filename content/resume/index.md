@@ -8,15 +8,15 @@ draft: false
 
 ## Resume
 
-* Click to download
+[PDF Download Link][1]
 
-[<img class="alignnone size-full wp-image-5" style="border: 1px solid black;" title="davidwang_resume-0" src="/wp-content/uploads/2016/08/davidwang_resume-0.png" alt="" />][1]
+[<img style="border: 1px solid black; width: 100%;" title="davidwang_resume-0" src="/resume/davidwang_resume-0.png" alt="" />][1]
 
-[<img class="alignnone size-full wp-image-5" style="border: 1px solid black;" title="davidwang_resume-1" src="/wp-content/uploads/2016/08/davidwang_resume-1.png" alt="" />][1]
+[<img style="border: 1px solid black; width: 100%;" title="davidwang_resume-1" src="/resume/davidwang_resume-1.png" alt="" />][1]
 
-[<img class="alignnone size-full wp-image-5" style="border: 1px solid black;" title="davidwang_resume-1" src="/wp-content/uploads/2016/08/davidwang_resume-2.png" alt="" />][1]
+[<img style="border: 1px solid black; width: 100%;" title="davidwang_resume-1" src="/resume/davidwang_resume-2.png" alt="" />][1]
 
-[<img class="alignnone size-full wp-image-5" style="border: 1px solid black;" title="davidwang_resume-1" src="/wp-content/uploads/2016/08/davidwang_resume-3.png" alt="" />][1]
+[<img style="border: 1px solid black; width: 100%;" title="davidwang_resume-1" src="/resume/davidwang_resume-3.png" alt="" />][1]
 
 ## Links to Company Web Sites
 
@@ -36,7 +36,7 @@ draft: false
 
 [<img class="alignnone size-full wp-image-41" title="lcs" src="/wp-content/uploads/2010/06/lcs.png" alt="" width="134" height="55" />][5][<img title="csail" src="../wp-content/uploads/2010/06/csail.jpg" alt="" width="145" height="99" />][5]
 
- [1]: /wp-content/uploads/2016/08/davidwang_resume.pdf
+ [1]: /resume/davidwang_resume.pdf
  [2]: http://www.prn.com
  [3]: http://www.arubanetworks.com
  [4]: http://www.devicescape.com
