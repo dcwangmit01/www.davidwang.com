@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cka on David C Wang</title>
+    <link>https://www.davidwang.com/tags/cka/</link>
+    <description>Recent content in cka on David C Wang</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018. All rights reserved.</copyright>
+    <lastBuildDate>Fri, 01 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.davidwang.com/tags/cka/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Study for the Certified Kubernetes Exams - CKAD and CKA</title>
+      <link>https://www.davidwang.com/post/how-to-study-for-certified-kubernetes-exams-ckad-cka/</link>
+      <pubDate>Fri, 01 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.davidwang.com/post/how-to-study-for-certified-kubernetes-exams-ckad-cka/</guid>
+      <description>Intro At work, we&amp;rsquo;ve asked our team members to pass the official Linux Foundation certification exams for Kubernetes. The exams are challenging, practical, and realistic. They serve perfectly as a minimum bar for our engineers who work with Kubernetes. The exams don&amp;rsquo;t cover everything that is typically needed to manage a Kubernetes cluster (e.g. helm, helmfile, etc.), but they do ensure that an engineer demonstrates basic competence.
+The CKAD and CKA Exams The exams are:</description>
+    </item>
+    
+  </channel>
+</rss>

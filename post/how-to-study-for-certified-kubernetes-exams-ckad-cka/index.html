@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.59.0" />
+
+  <title>How to Study for the Certified Kubernetes Exams - CKAD and CKA &middot; David C Wang</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://www.davidwang.com/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="https://www.davidwang.com/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="https://www.davidwang.com/img/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="https://www.davidwang.com/">David C Wang</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/projects/"><i class='fa fa-list fa-fw'></i>Projects</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/resume/"><i class='fa fa-file fa-fw'></i>Resume</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="https://www.davidwang.com/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-facebook-square fa-fw"></i>Facebook</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" rel="me" target="_blank"><i class="fab fa-linkedin"></i></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" rel="me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small>&copy; 2018. All rights reserved.</small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>How to Study for the Certified Kubernetes Exams - CKAD and CKA</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>01 Feb 2019, 00:00</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/technical">technical</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/linux">linux</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/kubernetes">kubernetes</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/ckad">ckad</a>&nbsp;&#47;
+    
+      <a class="post-taxonomy-tag" href="https://www.davidwang.com/tags/cka">cka</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<h2 id="intro">Intro</h2>
+
+<p>At work, we&rsquo;ve asked our team members to pass the official Linux Foundation certification exams for Kubernetes.  The exams are challenging, practical, and realistic. They serve perfectly as a <em>minimum</em> bar for our engineers who work with Kubernetes.  The exams don&rsquo;t cover <em>everything</em> that is typically needed to manage a Kubernetes cluster (e.g. helm, helmfile, etc.), but they do ensure that an engineer demonstrates basic competence.</p>
+
+<h2 id="the-ckad-and-cka-exams">The CKAD and CKA Exams</h2>
+
+<p>The exams are:</p>
+
+<ul>
+<li><strong>Certified Kubernetes Application Developer (CKAD)</strong> covers the basics of how to configure, deploy, and debug applications within a Kubernetes cluster.</li>
+<li><strong>Certified Kubernetes Administrator (CKA)</strong> covers all of the material from the CKAD, as well as the basics of how to configure, deploy, and debug the Kubernetes cluster-level infrastructure itself including masters, nodes, kubelet, scheduler, etcd.  The CKA is more difficult than the CKAD.</li>
+</ul>
+
+<p>The certifications are taken online with a live human proctor via webcam, screensharing, and web browser.  The CKAD is a 2 hour exam with a 66% score required to pass, while the CKA is a 3 hour exam with a 74% score required to pass.  Both exams require the user to interact and solve problems on real Kubernetes deployments at the command line using the <code>kubectl</code> utility.  The exams are realistic, and do define a minimum bar.  The exam fee is $300 before applying easily found discount codes.</p>
+
+<h2 id="how-hard-are-the-exams">How Hard are the Exams?</h2>
+
+<p>Individuals on our team have taken anywhere between 1 day and 1 week to study.  We all passed the exams on first attempts.  We all have significant experience with Kubernetes.</p>
+
+<p>One team member prepared for 1 day and was able to pass both exams, taking the harder CKA first.  The other team members took up to 1 week to prepare, but felt much more confident after taking the exams.</p>
+
+<p>Please note that there isn&rsquo;t much risk to failing the exam, because an exam re-take is included without additional cost if you have registered for the exam directly on <a href="https://www.cncf.io">https://www.cncf.io</a>.</p>
+
+<h2 id="how-to-study">How to Study</h2>
+
+<ul>
+<li>Read through the exam handbook and /
+
+<ul>
+<li><a href="https://www.cncf.io/certification/candidate-handbook">https://www.cncf.io/certification/candidate-handbook</a></li>
+<li><a href="https://www.cncf.io/certification/tips/">https://www.cncf.io/certification/tips/</a></li>
+</ul></li>
+<li>Take the CKAD before the CKA.
+
+<ul>
+<li>The CKAD is easier, and requires a lower passing score</li>
+<li>The CKA includes everything on the CKAD, plus cluster admin tasks</li>
+</ul></li>
+<li>Get comfortable with the linux terminal.
+
+<ul>
+<li>Each exam is live at a single linux terminal</li>
+<li>Know how to type quickly</li>
+<li>Know how to use a terminal multiplexor such as <code>screen</code> or <code>tmux</code></li>
+<li>Know how to use an editor such as <code>vi</code> or <code>emacs</code></li>
+</ul></li>
+<li>Run through the CKAD exercises here:
+
+<ul>
+<li><a href="https://github.com/dgkanatsios/CKAD-exercises">https://github.com/dgkanatsios/CKAD-exercises</a></li>
+</ul></li>
+<li>(CKA-only) Practice Kubernetes the Hard Way
+
+<ul>
+<li><a href="https://github.com/kelseyhightower/kubernetes-the-hard-way">https://github.com/kelseyhightower/kubernetes-the-hard-way</a></li>
+</ul></li>
+<li>If you wish to experience the web browser linux shell which is the primary interface to the exam, you may setup GateOne.
+
+<ul>
+<li>Docker image: <a href="https://hub.docker.com/r/dcwangmit01/gateone">https://hub.docker.com/r/dcwangmit01/gateone</a></li>
+<li>Source code: <a href="https://github.com/dcwangmit01/gateone">https://github.com/dcwangmit01/gateone</a></li>
+<li>Forked, because the original wouldn&rsquo;t build and seems to be unmaintained.</li>
+</ul></li>
+</ul>
+
+<h2 id="exam-tips">Exam Tips</h2>
+
+<ul>
+<li>Get comfortable with <code>kubectl</code> and its tab completion.</li>
+<li>(CKA-only) Get comfortable with <code>ssh</code></li>
+<li>(CKA-only) Get comfortable with <code>systemd</code> tools such as <code>systemctl</code> and <code>journalctl</code>.</li>
+<li>Know how to use <code>kubectl run ... --dry-run -o yaml</code> to generate yaml snippets without referring to the documentation for pods, deployments, etc.</li>
+<li>Be familiar with <code>kubectl explain ...</code></li>
+<li>Save your nodes and yaml snippets as you go along, since you can reuse them for later questions (e.g. <code>question1-pod.yaml</code>)</li>
+<li>Work quickly and only double-check if necessary.
+
+<ul>
+<li>Each exam is conducted under serious time pressure.</li>
+<li>Most of us ran out of time and were unable to address every single exam question.</li>
+</ul></li>
+<li>You are allowed bookmarks in your Chrome web browser.</li>
+</ul>
+
+<h2 id="links">Links</h2>
+
+<ul>
+<li>CKA Registration Link
+
+<ul>
+<li><a href="https://www.cncf.io/certification/cka/">https://www.cncf.io/certification/cka/</a></li>
+</ul></li>
+<li>CKAD Registration Link
+
+<ul>
+<li><a href="https://www.cncf.io/certification/ckad/">https://www.cncf.io/certification/ckad/</a></li>
+</ul></li>
+<li>Discount codes for Linux Foundation Exams
+
+<ul>
+<li>We were able to get 15% off</li>
+<li><a href="https://www.retailmenot.com/view/training.linuxfoundation.org">https://www.retailmenot.com/view/training.linuxfoundation.org</a></li>
+</ul></li>
+</ul>
+
+  
+  <h4><i class="fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f" target="_blank" title="Share on Facebook"><i class="fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f&via=HorribleGeek" target="_blank" title="Tweet"><i class="fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f" target="_blank" title="Share on Google+"><i class="fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f" target="_blank" title="Post to Tumblr"><i class="fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f" target="_blank" title="Pin it"><i class="fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fwww.davidwang.com%2fpost%2fhow-to-study-for-certified-kubernetes-exams-ckad-cka%2f" target="_blank" title="Submit to Reddit"><i class="fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://www.davidwang.com/post/ceph-rbd-bare-metal-install-for-kubernetes-on-packet-net/">Ceph RBD Bare-Metal Install for Kubernetes (on Packet.net)</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+  </div>
+</div>
+
+
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://www.davidwang.com/js/ui.js"></script>
+<script src="https://www.davidwang.com/js/menus.js"></script>
+
+
+<script>
+  
+  if (window.location.hostname != "localhost") {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-129089054-1', 'auto');
+    ga('send', 'pageview');
+  }
+</script>
+
+
+
+
+
+<script src="https://www.davidwang.com/js/math-code.js"></script>
+  <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+</body>
+</html>
+

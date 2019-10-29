@@ -5,9 +5,11 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.48" />
+  <meta name="generator" content="Hugo 0.59.0" />
 
   <title>Tunneling pop3/smtp to gmail SSL pop3s/smtps using xinetd on Linux &middot; David C Wang</title>
+
+    
 
   
   
@@ -30,7 +32,7 @@
   <link rel="stylesheet" href="https://www.davidwang.com/css/blackburn.css">
 
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
 
   
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
@@ -115,7 +117,7 @@
 
     
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+      <a class="pure-menu-link" href="https://twitter.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-twitter-square fa-fw"></i>Twitter</a>
     </li>
     
 
@@ -123,21 +125,7 @@
 
     
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" target="_blank"><i class="fa fa-facebook-square fa-fw"></i>Facebook</a>
-    </li>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" target="_blank"><i class="fa fa-instagram fa-fw"></i>Instagram</a>
+      <a class="pure-menu-link" href="https://facebook.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-facebook-square fa-fw"></i>Facebook</a>
     </li>
     
 
@@ -150,16 +138,8 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" target="_blank"><i class="fa fa-linkedin-square fa-fw"></i>LinkedIn</a>
+      <a class="pure-menu-link" href="https://instagram.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-instagram fa-fw"></i>Instagram</a>
     </li>
     
 
@@ -174,8 +154,30 @@
     
 
     
+
+    
+
+    
+
+    
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://github.com/dcwangmit01" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+      <a class="pure-menu-link" href="https://linkedin.com/in/dcwangmit01" rel="me" target="_blank"><i class="fab fa-linkedin"></i></i>LinkedIn</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/dcwangmit01" rel="me" target="_blank"><i class="fab fa-github-square fa-fw"></i>GitHub</a>
     </li>
     
 
@@ -185,7 +187,7 @@
 
     
     <li class="pure-menu-item">
-      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/5213030" rel="me" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>Stack Overflow</a>
     </li>
     
 
@@ -338,6 +340,46 @@
 <span style="color:#960050;background-color:#1e0010">#</span>      <span style="color:#a6e22e">telnet</span> <span style="color:#a6e22e">localhost</span> <span style="color:#ae81ff">110</span>
 <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#ae81ff">6</span>) <span style="color:#a6e22e">Point</span> <span style="color:#a6e22e">your</span> <span style="color:#a6e22e">mail</span> <span style="color:#a6e22e">smtp</span> <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">here</span></code></pre></div>
 
+  
+  <h4><i class="fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f" target="_blank" title="Share on Facebook"><i class="fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f&via=HorribleGeek" target="_blank" title="Tweet"><i class="fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f" target="_blank" title="Share on Google+"><i class="fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f" target="_blank" title="Post to Tumblr"><i class="fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f" target="_blank" title="Pin it"><i class="fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fwww.davidwang.com%2fpost%2ftunneling-pop3-smtp-xinetd-linux%2f" target="_blank" title="Submit to Reddit"><i class="fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
 
   
 <div class="prev-next-post pure-g">
@@ -373,6 +415,7 @@
 </div>
 </div>
 <script src="https://www.davidwang.com/js/ui.js"></script>
+<script src="https://www.davidwang.com/js/menus.js"></script>
 
 
 <script>
@@ -387,6 +430,8 @@
     ga('send', 'pageview');
   }
 </script>
+
+
 
 
 
