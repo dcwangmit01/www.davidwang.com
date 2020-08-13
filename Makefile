@@ -32,6 +32,9 @@ publish: build  ## Build and push the website to ghpages
 	@echo
 	cat public/CNAME
 
+clean:
+	rm -rf public
+
 
 help:  ## Print list of Makefile targets
 	@# Taken from https://github.com/spf13/hugo/blob/master/Makefile
