@@ -7,6 +7,11 @@ copyright = "&copy; 2018. All rights reserved."
 canonifyurls = true
 paginate = 10
 
+# Allows embedded html inside of markdown files
+[markup]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 [indexes]
   tag = "tags"
   topic = "topics"
