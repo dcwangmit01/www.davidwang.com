@@ -40,7 +40,7 @@ What You&amp;rsquo;ll Get with These Instructions One may use these instructions
       <guid>https://www.davidwang.com/post/secure-openvpn-routing-ddwrt/</guid>
       <description>Description I&amp;rsquo;ve created a secure routed VPN network between all of my family&amp;rsquo;s home networks. Here&amp;rsquo;s what it looks like, followed by how I did it.
 DD-WRT Network Diagram   Here&amp;rsquo;s an overview of the components:
- Home Network  OpenVPN concentrator Netgear WNR3500L (480Mhz CPU, 8MB Flash, 64MB RAM) DD-WRT Mega/Big (Includes OpenVPN), with jffs enabled Local Network: 192.168.1.0/24 Dynamic DNS: xxxx.dyndns.org  Remote Client Networks 1 and 2  OpenVPN client Linksys WRT54G (266Mhz CPU, 4MB Flash, 16MB RAM) DD-WRT VPN (Includes OpenVPN), with jffs enabled Client Network 1  Local Network: 192.</description>
+ Home Network  OpenVPN concentrator Netgear WNR3500L (480Mhz CPU, 8MB Flash, 64MB RAM) DD-WRT Mega/Big (Includes OpenVPN), with jffs enabled Local Network: 192.168.1.0/24 Dynamic DNS: xxxx.dyndns.org   Remote Client Networks 1 and 2  OpenVPN client Linksys WRT54G (266Mhz CPU, 4MB Flash, 16MB RAM) DD-WRT VPN (Includes OpenVPN), with jffs enabled Client Network 1  Local Network: 192.</description>
     </item>
     
     <item>

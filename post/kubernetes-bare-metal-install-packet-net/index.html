@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>Kubernetes Bare-Metal Install (on Packet.net) &middot; David C Wang</title>
 
@@ -280,37 +280,26 @@
 
 </div>
 
-  
-
-<p>Installing Kubernetes on bare-metal machines is dead simple, and a million times easier than installing OpenStack. The bulk of the instructions below involve setting up the bare-metal machines on <a href="https://packet.net">packet.net</a>.</p>
-
-<h2 id="what-you-ll-get-with-these-instructions">What You&rsquo;ll Get with These Instructions</h2>
-
+  <p>Installing Kubernetes on bare-metal machines is dead simple, and a million times easier than installing OpenStack. The bulk of the instructions below involve setting up the bare-metal machines on <a href="https://packet.net">packet.net</a>.</p>
+<h2 id="what-youll-get-with-these-instructions">What You&rsquo;ll Get with These Instructions</h2>
 <p>One may use these instructions to create a <em>basic</em> Kubernetes cluster. In order to create a cluster environment equivalent to a hosted solution (GKE) or turn-key solutions (Kubernetes on AWS or GCE), you&rsquo;ll need persistent volume and load-balancer support. A future post will cover how to setup persistent volume storage as a Ceph RBD cluster, and how to work around the need for external load-balancer integration by deploying a Kubernetes Ingress DaemonSet with DNS.</p>
-
 <p>In the following guide, we&rsquo;ll build a Kubernetes cluster with 1 master and 2 nodes.</p>
-
 <h2 id="bare-metal-or-cloud-vms-all-the-same">Bare-Metal or Cloud VMs, All the Same</h2>
-
 <p>These instructions should also work cloud VMs, so long as the following criterial are met:</p>
-
 <ul>
 <li>All machines are network reachable, without restriction
-
 <ul>
 <li>i.e. open iptables, open security groups</li>
-</ul></li>
+</ul>
+</li>
 <li>Root access through password-less SSH is enabled
-
 <ul>
 <li>i.e. configured /root/.ssh/authorized_keys</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>Because not many of us have multiple bare-metal machines laying around, we&rsquo;ll rent them from <a href="https://packet.net">packet.net</a>.</p>
-
 <h2 id="step-summary">Step Summary</h2>
-
 <ul>
 <li>Setup a Development Environment</li>
 <li>Provision Bare-Metal Machines (on packet.net)</li>
@@ -318,33 +307,24 @@
 <li>Test the Cluster by Creating a POD</li>
 <li>Configure a Remote Kubernetes Client to Talk to the Cluster</li>
 </ul>
-
 <h2 id="setup-a-development-environment">Setup a Development Environment</h2>
-
 <p>The easiest method is to instantiate a <a href="https://github.com/dcwangmit01/vagrant-devenv">vagrant machine</a> with all of the necessary tools. Feel free to do this manually. The vagrant environment includes the following:</p>
-
 <ul>
 <li>Docker</li>
 <li>Kubectl</li>
 <li>Ansible</li>
 <li>Hashicorp Terraform</li>
 </ul>
-
 <p>Fetch the vagrant machine</p>
-
 <pre><code># Tested at dcwangmit01/vagrant-devenv - branch master, commit a6c65478
 git clone git@github.com:dcwangmit01/vagrant-devenv
 cd vagrant-devenv
 </code></pre>
-
 <p>If you are on OSX, ensure and install the host dependencies.</p>
-
 <pre><code># Installs brew, virtualbox, etc.
 make deps
 </code></pre>
-
 <p>Create your vagant environment</p>
-
 <pre><code># Start ssh-agent and load your key
 eval `ssh-agent`; ssh-add
 
@@ -354,17 +334,11 @@ vagrant up
 # Connect to the box
 vagrant ssh
 </code></pre>
-
 <p>Note: From now on, do everything from within this vagrant machine.</p>
-
-<h2 id="provision-bare-metal-machines-on-packet-net">Provision Bare-Metal Machines (on packet.net)</h2>
-
+<h2 id="provision-bare-metal-machines-on-packetnet">Provision Bare-Metal Machines (on packet.net)</h2>
 <p>The <a href="https://github.com/kubernetes/contrib">contrib/ansible</a> scripts are targeted to offical Redhat distributions including RHEL and Fedora. However, packet.net does not currently support these operating systems. Thus, we deploy Centos7 servers, which is the next-closest thing and happens to work.</p>
-
 <p>If you enjoy clicking around Web UI&rsquo;s, follow the manual instructions below. Otherwise, the only automated provisioning method supported by <a href="https://packet.net">packet.net</a> is to use Hashicorp Terraform. A CLI client does not yet exist.</p>
-
 <h3 id="manual-webui-instructions">Manual WebUI Instructions</h3>
-
 <ul>
 <li>Login to the web UI at <a href="https://packet.net">packet.net</a></li>
 <li>Create a project</li>
@@ -372,21 +346,13 @@ vagrant ssh
 <li>Create 3 servers with Centos7</li>
 <li>Note the names and IPs of the newly created machines</li>
 </ul>
-
 <h3 id="automated-instructions-using-terraform">Automated Instructions (using Terraform)</h3>
-
-<p>Instantiating servers via Hashicorp Terraform must happen in two steps if a &#8220;packet&#95;project&#8221; has not yet been created.</p>
-
-<p>This is because the &#8220;packet&#95;device&#8221; (aka. bare metal machine) definitions require a &#8220;project&#95;id&#8221; upon execution. However, one does not know the &#8220;project&#95;id&#8221; until after the &#8220;packet&#95;project&#8221; has been created. One might resolve this issue in the future by having the packet&#95;device require a project&#95;name instead of a project&#95;id. Then we could &#8220;terraform apply&#8221; this file in one go.</p>
-
-<p>See the Appendix for curl commands that will help you discover project&#95;ids from the API.</p>
-
-<h4 id="step-1-create-the-packet-net-project">Step 1: Create the Packet.net Project</h4>
-
+<p>Instantiating servers via Hashicorp Terraform must happen in two steps if a “packet_project” has not yet been created.</p>
+<p>This is because the “packet_device” (aka. bare metal machine) definitions require a “project_id” upon execution. However, one does not know the “project_id” until after the “packet_project” has been created. One might resolve this issue in the future by having the packet_device require a project_name instead of a project_id. Then we could “terraform apply” this file in one go.</p>
+<p>See the Appendix for curl commands that will help you discover project_ids from the API.</p>
+<h4 id="step-1-create-the-packetnet-project">Step 1: Create the Packet.net Project</h4>
 <p>First, create your auth token via the <a href="https://packet.net">packet.net</a> UI and note it down.</p>
-
 <p>Create a cluster.tf, and tweak the {variables} according to your needs.</p>
-
 <pre><code># Configure the Packet Provider
 provider &quot;packet&quot; {
         auth_token = &quot;{REPLACE_WITH_AUTH_TOKEN}&quot;
@@ -407,17 +373,12 @@ resource &quot;packet_project&quot; &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot
         name = &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot;
 }
 </code></pre>
-
 <p>Run Terraform to create the project.</p>
-
 <pre><code>terraform plan -out cluster
 terraform apply
 </code></pre>
-
-<h4 id="step-2-create-the-packet-net-machines">Step 2: Create the Packet.net Machines</h4>
-
-<p>Locate your PACKET&#95;PROJECT&#95;ID, so that you may embed it in the cluster.tf Terraform file.</p>
-
+<h4 id="step-2-create-the-packetnet-machines">Step 2: Create the Packet.net Machines</h4>
+<p>Locate your PACKET_PROJECT_ID, so that you may embed it in the cluster.tf Terraform file.</p>
 <pre><code># Locate your API Key from the Web Portal https://app.packet.net/
 export PACKET_AUTH={REPLACE_WITH_AUTH_TOKEN}
 
@@ -427,9 +388,7 @@ curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/projec
 # Search the output above for the PACKET_PROJECT_ID
 #   and use it in the packet_device definitions below
 </code></pre>
-
 <p>Append to cluster.tf, and tweak the {variables} according to your needs.</p>
-
 <pre><code># Create a device
 resource &quot;packet_device&quot; &quot;kube-master-0001&quot; {
         hostname = &quot;kube-master-0001&quot;
@@ -458,15 +417,11 @@ resource &quot;packet_device&quot; &quot;kube-node-0002&quot; {
         project_id = &quot;{REPLACE_WITH_PACKET_PROJECT_ID}&quot;
 }
 </code></pre>
-
 <p>Run Terraform</p>
-
 <pre><code>terraform plan -out cluster
 terraform apply
 </code></pre>
-
 <p>Note the names and IPs of the newly created machines</p>
-
 <pre><code>cat terraform.tfstate|grep -E '(hostname|network.0.address)'
 # Returns something like this
 # &quot;hostname&quot;: &quot;kube-master-0001&quot;,
@@ -476,9 +431,7 @@ terraform apply
 # &quot;hostname&quot;: &quot;kube-node-0002&quot;,
 # &quot;network.0.address&quot;: &quot;147.75.196.83&quot;,
 </code></pre>
-
 <p>Create an ~/.ssh/config file with the hostname to IP mappings. This allows you to refer to the machines via hostnames from your Dev box, as well as Ansible inventory definitions.</p>
-
 <pre><code>Host kube-master-0001
   User root
   Hostname {REPLACE_WITH_IP_OF_kube-master-0001}
@@ -489,27 +442,20 @@ Host kube-node-0002
   User root
   Hostname {REPLACE_WITH_IP_OF_kube-node-0002}
 </code></pre>
-
-<h2 id="configure-and-run-the-kubernetes-contrib-ansible-scripts">Configure and Run the Kubernetes contrib/ansible Scripts</h2>
-
+<h2 id="configure-and-run-the-kubernetes-contribansible-scripts">Configure and Run the Kubernetes contrib/ansible Scripts</h2>
 <p>Fetch the kubernetes/contrib code</p>
-
 <pre><code># Tested at kubernetes/contrib commit 3634e300
 git clone git@github.com:kubernetes/contrib.git
 cd contrib/ansible
 </code></pre>
-
 <p>Create an Ansible inventory file (more info in the contrib/ansible/README.md file)</p>
-
 <pre><code># Create the inventory file from the example
 cp inventory.example.single_master inventory
 
 # Edit the inventory file and fill in the hostnames or IP addresses
 emacs inventory
 </code></pre>
-
-<p>Example &#8220;inventory&#8221; file, which will work without modification if ~/.ssh/config is configured with host IP mappings.</p>
-
+<p>Example “inventory” file, which will work without modification if ~/.ssh/config is configured with host IP mappings.</p>
 <pre><code># configure the master IPs
 [masters]
 kube-master-0001
@@ -523,36 +469,24 @@ kube-master-0001
 kube-node-0001
 kube-node-0002
 </code></pre>
-
 <p>Test the ansible connection, and accept host-keys into your knownhosts</p>
-
 <pre><code>ansible all -u root -i inventory -m ping
 </code></pre>
-
-<p>Configure group&#95;vars/all.yml to set the ansible&#95;ssh&#95;user to &#8220;root&#8221;</p>
-
+<p>Configure group_vars/all.yml to set the ansible_ssh_user to “root”</p>
 <pre><code># The following will uncomment &quot;#ansible_ssh_user: root&quot;
 sed -i 's@^#ansible_ssh_user@ansible_ssh_user@' group_vars/all.yml
 </code></pre>
-
 <p>Run the ansible setup script to install Kubernetes on all machines</p>
-
 <pre><code>./setup.sh
 </code></pre>
-
-<p>&#42; Run this more than once until zero errors. It&rsquo;s idempotent!</p>
-
+<p>* Run this more than once until zero errors. It&rsquo;s idempotent!</p>
 <h2 id="test-the-cluster-by-creating-a-pod">Test the Cluster by Creating a POD</h2>
-
 <p>The kubernetes master is auto-configured to talk with the cluster. Run some test commands</p>
-
 <pre><code>ssh root@kube-master-0001
 kubectl cluster-info
 kubectl get po,rc,svc
 </code></pre>
-
 <p>Create a POD, and test that it is running</p>
-
 <pre><code># Start a POD
 kubectl run echoheaders --image=gcr.io/google_containers/echoserver:1.3 --port=8080
 # Find the pod ID
@@ -563,11 +497,8 @@ kubeclt exec -it {THE_POD_ID} bash
 curl localhost:8080
 # Exit with {ctrl-d}
 </code></pre>
-
 <h2 id="configure-a-remote-kubernetes-client-to-talk-to-the-cluster">Configure a Remote Kubernetes Client to Talk to the Cluster</h2>
-
-<p>Now that the kubernetes cluster has been setup, you may use &#8220;kubectl&#8221; directly after ssh&rsquo;ing to the master. However, it would be nice to use &#8220;kubectl&#8221; from the vagrant dev environment.</p>
-
+<p>Now that the kubernetes cluster has been setup, you may use “kubectl” directly after ssh&rsquo;ing to the master. However, it would be nice to use “kubectl” from the vagrant dev environment.</p>
 <pre><code># Copy the kube/config from the master to your dev machine
 scp root@kube-master-0001:/etc/kubernetes/kubectl.kubeconfig ~/.kube/config.pkt
 
@@ -589,19 +520,15 @@ kubectl config current-context
 # Run a some commands to verify that it all works
 kubectl get svc,rc,po
 </code></pre>
-
 <ul>
 <li>Now you have a working kubernetes cluster on Packet.net
-
 <ul>
 <li>Excluding persistent storage and load-balancing</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h2 id="appendix">Appendix</h2>
-
 <h3 id="curl-commands">Curl Commands</h3>
-
 <pre><code># Locate your API Key from the Web Portal https://app.packet.net/
 export PACKET_AUTH={REPLACE_WITH_API_KEY}
 
@@ -617,9 +544,7 @@ curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/facili
 # Get a list of operating systems
 curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/operating-systems |python -m json.tool|less
 </code></pre>
-
 <h3 id="example-settings">Example Settings</h3>
-
 <pre><code># Plan IDs
 baremetal_0 baremetal_1
 

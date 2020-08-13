@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>Ceph RBD Bare-Metal Install for Kubernetes (on Packet.net) &middot; David C Wang</title>
 
@@ -272,50 +272,37 @@
 
 </div>
 
-  
-
-<p>In this guide, we&#8217;ll create a bare-metal Ceph RBD cluster which may provide persistent volume support for a Kubernetes environment.</p>
-
+  <p>In this guide, we’ll create a bare-metal Ceph RBD cluster which may provide persistent volume support for a Kubernetes environment.</p>
 <p>Our Ceph RBD cluster will be composed of a single Ceph monitor (MON) and two Ceph Object Storage Daemon (OSD) nodes. In Ceph, MON nodes track the state of the cluster, and OSD nodes hold the data to be persisted.</p>
-
 <h2 id="kubernetes-and-the-need-for-ceph-rbd">Kubernetes and the Need for Ceph RBD</h2>
-
 <p>Creating a Kubernetes cluster environment equivalent to hosted solutions (GKE) and turn-key solutions (Kubernetes on AWS or GCE) requires 3 things:</p>
-
 <ol>
 <li>The Kubernetes System Itself: Masters and Nodes (<a href="https://www.davidwang.com/2016/05/21/kubernetes-bare-metal-install-on-packet-net/">Setup Guide</a>)</li>
 <li><strong>Persistent Storage</strong> (<em>This</em> Guide)</li>
 <li>External Load-Balancers (Future Guide)</li>
 </ol>
-
-<p>Use this guide to implement persistent storage to make a Kubernetes environment suitable for hosting stateful applications. When Pods of persistent applications such as databases fail, the Kubernetes system directs the Pod to migrate from one Node to another. The data is often left behind and lost&#8230; unless it was stored on a Kubernetes volume backed by a network block device. In this case Kubernetes will automatically migrate the Volume mount along with the Pod to the new destination Node.</p>
-
-<p><a href="http://ceph.com/ceph-storage/block-storage/">Ceph RBD</a> may be used to create a redundant, highly available storage cluster that provides network-mountable block storage devices, similar to that of Rackspace Cloud Block Storage and Amazons EBS (minus the API). Ceph itself is a large project which also provides network-mountable posix filesystems (CephFS) and network object storage like S3 or Swift. However, for Kubernetes we only need to deploy a subset of Ceph&#8217;s functionality&#8230; Ceph RBD.</p>
-
+<p>Use this guide to implement persistent storage to make a Kubernetes environment suitable for hosting stateful applications. When Pods of persistent applications such as databases fail, the Kubernetes system directs the Pod to migrate from one Node to another. The data is often left behind and lost… unless it was stored on a Kubernetes volume backed by a network block device. In this case Kubernetes will automatically migrate the Volume mount along with the Pod to the new destination Node.</p>
+<p><a href="http://ceph.com/ceph-storage/block-storage/">Ceph RBD</a> may be used to create a redundant, highly available storage cluster that provides network-mountable block storage devices, similar to that of Rackspace Cloud Block Storage and Amazons EBS (minus the API). Ceph itself is a large project which also provides network-mountable posix filesystems (CephFS) and network object storage like S3 or Swift. However, for Kubernetes we only need to deploy a subset of Ceph’s functionality… Ceph RBD.</p>
 <p>This guide should work on any machines, whether bare-metal, virtual, or cloud, so long as the following criterial are met:</p>
-
 <ul>
 <li>All Ceph cluster machines are running Ubuntu 14.04 LTS
-
 <ul>
 <li>Centos7 may work with yum-plugin-prorities disabled.</li>
-</ul></li>
+</ul>
+</li>
 <li>All machines are network reachable, without restriction
-
 <ul>
 <li>i.e. open iptables, open security groups</li>
-</ul></li>
+</ul>
+</li>
 <li>Root access through password-less SSH is enabled
-
 <ul>
 <li>i.e. configured /root/.ssh/authorized_keys</li>
-</ul></li>
 </ul>
-
-<p>Because not many of us have multiple bare-metal machines laying around, we&#8217;ll rent them from <a href="https://packet.net">packet.net</a>. If you already have machines provisioned, you may skip the provisioning section below.</p>
-
+</li>
+</ul>
+<p>Because not many of us have multiple bare-metal machines laying around, we’ll rent them from <a href="https://packet.net">packet.net</a>. If you already have machines provisioned, you may skip the provisioning section below.</p>
 <h2 id="step-summary">Step Summary</h2>
-
 <ul>
 <li>Setup a Development Environment</li>
 <li>Provision Bare-Metal Machines (on packet.net)</li>
@@ -323,33 +310,24 @@
 <li>Test the Cluster by Creating Storage Volumes</li>
 <li>Configure Remote Kubernetes Nodes to Use Ceph RBD Volumes</li>
 </ul>
-
 <h2 id="setup-a-development-environment">Setup a Development Environment</h2>
-
 <p>The easiest method is to instantiate a <a href="https://github.com/dcwangmit01/vagrant-devenv">vagrant machine</a> with all of the necessary tools. Feel free to do this manually. The vagrant environment includes the following:</p>
-
 <ul>
 <li>Docker</li>
 <li>Kubectl</li>
 <li>Ansible</li>
 <li>Hashicorp Terraform</li>
 </ul>
-
 <p>Fetch the vagrant machine</p>
-
 <pre><code># Tested at dcwangmit01/vagrant-devenv - branch master, commit abe7d520
 git clone git@github.com:dcwangmit01/vagrant-devenv
 cd vagrant-devenv
 </code></pre>
-
 <p>If you are on OSX, ensure and install the host dependencies.</p>
-
 <pre><code># Installs brew, virtualbox, vagrant, etc.
 make deps
 </code></pre>
-
 <p>Create and connect to the vagrant environment</p>
-
 <pre><code># Start ssh-agent and load your key
 eval `ssh-agent`; ssh-add
 
@@ -359,48 +337,33 @@ vagrant up
 # Connect to the box
 vagrant ssh
 </code></pre>
-
-<p>&#42; From now on, do everything from within this vagrant machine.</p>
-
-<h2 id="provision-packet-net-bare-metal-machines">Provision Packet.net Bare-Metal Machines</h2>
-
+<p>* From now on, do everything from within this vagrant machine.</p>
+<h2 id="provision-packetnet-bare-metal-machines">Provision Packet.net Bare-Metal Machines</h2>
 <p>The <a href="https://github.com/ceph/ceph-ansible">ceph/ceph-ansible</a> scripts</p>
-
 <p>work on Ubuntu 14.04, but fail on Centos 7 unless yum-plugin-priorities are disabled.</p>
-
-<p>If you enjoy clicking around WebUI&#8217;s, follow the manual instructions below. Otherwise, the only automated provisioning method supported by <a href="https://packet.net">packet.net</a> is to use Hashicorp Terraform. A CLI client does not yet exist.</p>
-
+<p>If you enjoy clicking around WebUI’s, follow the manual instructions below. Otherwise, the only automated provisioning method supported by <a href="https://packet.net">packet.net</a> is to use Hashicorp Terraform. A CLI client does not yet exist.</p>
 <h3 id="manual-webui-instructions">Manual WebUI Instructions</h3>
-
 <ul>
 <li>Login to the web UI at <a href="https://packet.net">packet.net</a></li>
 <li>Create a project</li>
 <li>Set an SSH key (which will be provisioned on new servers)</li>
 <li>Create 3 servers with Ubuntu 14.04
-
 <ul>
 <li>ceph-mon-0001</li>
 <li>ceph-osd-0001</li>
 <li>ceph-osd-0002</li>
-</ul></li>
+</ul>
+</li>
 <li>Follow the Create and Attach Disks section below</li>
 <li>Note the names and IPs of the newly created machines</li>
 </ul>
-
 <h3 id="semi-automatic-instructions-using-terraform">Semi-Automatic Instructions (Using Terraform)</h3>
-
-<p>Instantiating servers via Hashicorp Terraform must happen in two steps if a &#8220;packet&#95;project&#8221; has not yet been created.</p>
-
-<p>This is because the &#8220;packet&#95;device&#8221; (aka. bare metal machine) definitions require a &#8220;project&#95;id&#8221; upon execution. However, one does not know the &#8220;project&#95;id&#8221; until after the &#8220;packet&#95;project&#8221; has been created. One might resolve this issue in the future by having the packet&#95;device require a project&#95;name instead of a project&#95;id. Then we could &#8220;terraform apply&#8221; this file in one go.</p>
-
-<p>See the Appendix for curl commands that will help you discover project&#95;ids from the API.</p>
-
-<h4 id="step-1-create-the-packet-net-project">Step 1: Create the Packet.net Project</h4>
-
+<p>Instantiating servers via Hashicorp Terraform must happen in two steps if a “packet_project” has not yet been created.</p>
+<p>This is because the “packet_device” (aka. bare metal machine) definitions require a “project_id” upon execution. However, one does not know the “project_id” until after the “packet_project” has been created. One might resolve this issue in the future by having the packet_device require a project_name instead of a project_id. Then we could “terraform apply” this file in one go.</p>
+<p>See the Appendix for curl commands that will help you discover project_ids from the API.</p>
+<h4 id="step-1-create-the-packetnet-project">Step 1: Create the Packet.net Project</h4>
 <p>First, create your auth token via the <a href="https://packet.net">packet.net</a> UI and note it down.</p>
-
 <p>Create a cluster.tf, and tweak the {variables} according to your needs.</p>
-
 <pre><code># Configure the Packet Provider
 provider &quot;packet&quot; {
         auth_token = &quot;{REPLACE_WITH_AUTH_TOKEN}&quot;
@@ -421,17 +384,12 @@ resource &quot;packet_project&quot; &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot
         name = &quot;{REPLACE_WITH_A_NAME_FOR_CLUSTER}&quot;
 }
 </code></pre>
-
 <p>Run Terraform to create the project.</p>
-
 <pre><code>terraform plan -out cluster
 terraform apply
 </code></pre>
-
-<h4 id="step-2-create-the-packet-net-machines">Step 2: Create the Packet.net Machines</h4>
-
-<p>Locate your PACKET&#95;PROJECT&#95;ID, so that you may embed it in the cluster.tf Terraform file.</p>
-
+<h4 id="step-2-create-the-packetnet-machines">Step 2: Create the Packet.net Machines</h4>
+<p>Locate your PACKET_PROJECT_ID, so that you may embed it in the cluster.tf Terraform file.</p>
 <pre><code># Locate your API Key from the Web Portal https://app.packet.net/
 export PACKET_AUTH={REPLACE_WITH_AUTH_TOKEN}
 
@@ -441,9 +399,7 @@ curl -s -H  &quot;X-Auth-Token: $PACKET_AUTH&quot; https://api.packet.net/projec
 # Search the output above for the PACKET_PROJECT_ID
 #   and use it in the packet_device definitions below
 </code></pre>
-
 <p>Append to cluster.tf, and tweak the {variables} according to your needs. As of May 2016, only the ewr1 packet.net facility supports disk creation. Because of this, ensure all machines and disks are instantiated in facility ewr1.</p>
-
 <pre><code># Create a device
 resource &quot;packet_device&quot; &quot;ceph-mon-0001&quot; {
         hostname = &quot;ceph-mon-0001&quot;
@@ -472,15 +428,11 @@ resource &quot;packet_device&quot; &quot;ceph-osd-0002&quot; {
         project_id = &quot;{REPLACE_WITH_PACKET_PROJECT_ID}&quot;
 }
 </code></pre>
-
 <p>Run Terraform</p>
-
 <pre><code>terraform plan -out cluster
 terraform apply
 </code></pre>
-
 <p>Note the names and IPs of the newly created machines</p>
-
 <pre><code>cat terraform.tfstate|grep -E '(hostname|network.0.address)'
 # Returns something like this
 # &quot;hostname&quot;: &quot;ceph-mon-0001&quot;,
@@ -490,9 +442,7 @@ terraform apply
 # &quot;hostname&quot;: &quot;ceph-osd-0002&quot;,
 # &quot;network.0.address&quot;: &quot;147.75.197.189&quot;,
 </code></pre>
-
 <p>Create an ~/.ssh/config file with the hostname to IP mappings. This allows you to refer to the machines via hostnames from your Dev box, as well as Ansible inventory definitions.</p>
-
 <pre><code>Host ceph-mon-0001
   User root
   Hostname {REPLACE_WITH_IP_OF_ceph-mon-0001}
@@ -503,40 +453,28 @@ Host ceph-osd-0002
   User root
   Hostname {REPLACE_WITH_IP_OF_ceph-osd-0002}
 </code></pre>
-
 <h4 id="step-3-create-and-attach-disks">Step 3: Create and Attach Disks</h4>
-
 <p>This part is manual for now, using the <a href="https://packet.net">packet.net</a> WebUI.</p>
-
 <p>For each OSD node</p>
-
 <ul>
 <li>Using the WebUI, create a 100GB disk and name it the be the same as the respective OSD node (e.g. ceph-osd-0001)</li>
 <li>Using the WebUI, attach the disk to the respective OSD node</li>
-
-<li><p>Using SSH, connect to the OSD node and run the on-machine attach command</p>
-
+<li>Using SSH, connect to the OSD node and run the on-machine attach command</li>
+</ul>
 <pre><code># Connect to the box
 ssh root@ceph-osd-{id}
 # This will attach the disk and create a new entry under /dev/mapper/volume-{id}
 packet-block-storage-attach
-</code></pre></li>
-
-<li><p>Using SSH, connect to the OSD node and rename the attached volume to be a consistent name. The Ansible scripts we run later will expect the same volume names (e.g. /dev/mapper/data01) and the same number of volumes across all of the OSD nodes.</p>
-
+</code></pre><ul>
+<li>Using SSH, connect to the OSD node and rename the attached volume to be a consistent name. The Ansible scripts we run later will expect the same volume names (e.g. /dev/mapper/data01) and the same number of volumes across all of the OSD nodes.</li>
+</ul>
 <pre><code># Connect to the box
 ssh root@ceph-osd-{id}
 # Rename the newly mapped volume from /dev/mapper/volume-{id} to /dev/mapper/data01
 dmsetup rename /dev/mapper/volume-{id} data01
-</code></pre></li>
-</ul>
-
-<p>You may add additional disks to each OSD machine, so long as the number of and naming of disks on across all of the OSD machines are the consistent.</p>
-
-<h2 id="configure-and-run-the-ceph-ceph-ansible-scripts">Configure and Run the ceph/ceph-ansible scripts</h2>
-
+</code></pre><p>You may add additional disks to each OSD machine, so long as the number of and naming of disks on across all of the OSD machines are the consistent.</p>
+<h2 id="configure-and-run-the-cephceph-ansible-scripts">Configure and Run the ceph/ceph-ansible scripts</h2>
 <p>Fetch the ceph/ceph-ansible code</p>
-
 <pre><code># Tested at ceph/ceph-ansible - branch master, commit 84dad9a7
 git clone git@github.com:ceph/ceph-ansible.git
 cd ceph-ansible
@@ -554,9 +492,7 @@ ln -s mons.sample mons
 ln -s osds.sample osds
 popd
 </code></pre>
-
-<p>Create an Ansible inventory file name &#8220;inventory&#8221;, and use the hosts and IPs recorded prior.</p>
-
+<p>Create an Ansible inventory file name “inventory”, and use the hosts and IPs recorded prior.</p>
 <pre><code># configure monitor IPs or Names
 [mons]
 ceph-mon-0001
@@ -575,16 +511,11 @@ localhost ansible_connection=local
 # kube-node-0001
 # kube-node-0002
 </code></pre>
-
 <p>Test the ansible connection, and accept host-keys into your ~/.ssh/knownhosts</p>
-
 <pre><code>ansible all -u root -i inventory -m ping
 </code></pre>
-
 <p>Configure and edit <strong>group_vars/all</strong>. You may add the following</p>
-
 <p>settings, or replace/uncomment existing lines:</p>
-
 <pre><code>#####################################################################
 # Custom Configuration
 
@@ -623,11 +554,8 @@ osd_mkfs_options_xfs: -f -i size=2048
 osd_mount_options_xfs: noatime,largeio,inode64,swalloc
 osd_objectstore: filestore
 </code></pre>
-
 <p>Configure and edit <strong>groups_vars/osds</strong>. You may add the following</p>
-
 <p>settings, or replace/uncomment existing lines:</p>
-
 <pre><code>#####################################################################
 # Custom Configuration
 
@@ -647,30 +575,20 @@ devices:
 #   we only have a single disk.
 journal_collocation: true
 </code></pre>
-
-<p>Check if any &#8220;inventory&#8221; machine targets are running Centos 7. Disable yum-plugin-priorities, or else the ceph-ansible scripts will fail. If enabled, the scripts will fail to locate packages and dependencies because other repositories with the older versions of packages will take precedence over the ceph repository.</p>
-
+<p>Check if any “inventory” machine targets are running Centos 7. Disable yum-plugin-priorities, or else the ceph-ansible scripts will fail. If enabled, the scripts will fail to locate packages and dependencies because other repositories with the older versions of packages will take precedence over the ceph repository.</p>
 <pre><code># Connect to the machine
 ssh root@{centos7_machine}
 # Set the flag to disable yum-plugin-priorities
 sed -i 's@enabled = 1@enabled = 0@' /etc/yum/pluginconf.d/priorities.conf
 </code></pre>
-
 <p>Run the ansible setup script to install Ceph on all machines</p>
-
 <pre><code>ansible-playbook site.yml -i inventory
 </code></pre>
-
-<p>&#42; Run this more than once until zero errors. It&#8217;s idempotent!</p>
-
+<p>* Run this more than once until zero errors. It’s idempotent!</p>
 <h2 id="test-the-cluster-by-creating-storage-volumes">Test the Cluster by Creating Storage Volumes</h2>
-
 <h3 id="ensure-a-healthy-ceph-rbd-cluster">Ensure a Healthy Ceph RBD Cluster</h3>
-
 <p>Your local vagrant machine should now have the Ceph CLI tools installed and configured. If for some reason the tools are not working, try the following from the Ceph MON machine.</p>
-
 <p>Query Ceph cluster status</p>
-
 <pre><code>ceph -s
 #    cluster d1eab1dc-a050-46a4-9771-f2494714b96e
 #     health HEALTH_WARN
@@ -685,18 +603,13 @@ sed -i 's@enabled = 1@enabled = 0@' /etc/yum/pluginconf.d/priorities.conf
 #            72528 kB used, 199 GB / 199 GB avail
 #                  64 active+undersized+degraded
 </code></pre>
-
 <p>You can see that the cluster is working, but in a WARN state. Let us debug this.</p>
-
-<p>List all osd pools, and find only the default &#8220;rbd&#8221; pool.</p>
-
+<p>List all osd pools, and find only the default “rbd” pool.</p>
 <pre><code># list all OSD pools
 ceph osd pool ls
 # rbd
 </code></pre>
-
-<p>List the parameters of the default &#8220;rbd&#8221; osd pool.</p>
-
+<p>List the parameters of the default “rbd” osd pool.</p>
 <pre><code>ceph osd pool get rbd all
 # size: 3
 # min_size: 2
@@ -716,15 +629,11 @@ ceph osd pool ls
 # min_write_recency_for_promote: 0
 # fast_read: 0
 </code></pre>
-
-<p>Notice that <code>size == 3</code> which means that a healthy state requires 3 replicas for all placement groups within the &#8220;rbd&#8221; pool. However, we only have 2 OSDs, and thus are running in a degraded HEALTH_WARN state. If we decrease the number of required replicas, the cluster will return to a healthy state.</p>
-
+<p>Notice that <code>size == 3</code> which means that a healthy state requires 3 replicas for all placement groups within the “rbd” pool. However, we only have 2 OSDs, and thus are running in a degraded HEALTH_WARN state. If we decrease the number of required replicas, the cluster will return to a healthy state.</p>
 <pre><code># set redundancy of rbd default pool from 3 to 2, because we only have 2 OSDs
 ceph osd pool set rbd size 2
 </code></pre>
-
 <p>Check that Ceph cluster status has returned to HEALTH_OK. This may take a few seconds.</p>
-
 <pre><code>ceph -s
 #     cluster d1eab1dc-a050-46a4-9771-f2494714b96e
 #      health HEALTH_OK
@@ -736,24 +645,16 @@ ceph osd pool set rbd size 2
 #             73432 kB used, 199 GB / 199 GB avail
 #                   64 active+clean
 </code></pre>
-
 <h3 id="create-a-volume-for-testing">Create a Volume for Testing</h3>
-
-<p>We&#8217;ll test the Ceph cluster from the OSD nodes as Ceph clients. According to the earlier configuration:</p>
-
+<p>We’ll test the Ceph cluster from the OSD nodes as Ceph clients. According to the earlier configuration:</p>
 <p><code>public_network == cluster_network == 10.0.0.0/8</code></p>
-
 <p>Ceph will only listen to requests on the 10.0.0.0/8 network, which is a pseudo-servicenet alias for a private network between the machines within the same packet.net project. (<em>Note: Perhaps this may not work as expected. It seems that the ceph-monitor process is bound to the IP on the public network, which must be used in the Kubernetes Volume definitions</em>).</p>
-
 <p>Copy the credentials from the Ceph MON to the Ceph OSDs, so that they will be able to access the Ceph cluster as clients</p>
-
 <pre><code>scp root@ceph-mon-0001:/etc/ceph/ceph.client.admin.keyring .
 scp ceph.client.admin.keyring root@ceph-osd-0001:/etc/ceph/ceph.client.admin.keyring
 scp ceph.client.admin.keyring root@ceph-osd-0002:/etc/ceph/ceph.client.admin.keyring
 </code></pre>
-
 <p>From the first OSD node, create a volume, mount it, add data, and unmount the volume.</p>
-
 <pre><code># SSH to the first Ceph OSD node where we will simulate a client
 ssh root@ceph-osd-0001
 
@@ -801,9 +702,7 @@ umount /mnt/tmp
 # Unmap the RBD device
 rbd unmap rbd/vol01
 </code></pre>
-
 <p>From the second OSD node, mount the volume that the first node created, read data, and unmount the volume.</p>
-
 <pre><code># SSH to the second Ceph OSD node where we will simulate a client
 ssh root@ceph-osd-0002
 
@@ -825,29 +724,21 @@ umount /mnt/tmp
 # Unmap the RBD device
 rbd unmap rbd/vol01
 </code></pre>
-
 <h2 id="configure-a-kubernetes-container-to-mount-a-ceph-rbd-volume">Configure a Kubernetes Container to Mount a Ceph RBD Volume</h2>
-
 <p>The rest of this guide assumes that you have a working Kubernetes environment created by following this (<a href="https://www.davidwang.com/2016/05/21/kubernetes-bare-metal-install-on-packet-net/">Setup Guide</a>).</p>
-
 <p>Ensure that your Kubernetes environment is working.</p>
-
 <pre><code>export KUBECONFIG=~/.kube/config.pkt
 kubectl config use-context pkt-east
 kubectl config current-context
 kubectl cluster-info
 kubectl get svc,rc,po
 </code></pre>
-
 <p>First, base64-encode the ceph client key.</p>
-
 <pre><code>ssh ceph-mon-0001 cat /etc/ceph/ceph.client.admin.keyring | \
   grep key|awk '{print $3}' | base64
 # VhyV0E9PQoVhyV0E9PQoVhyV0E9PQoVhyV0E9PQoVhyV0E9PQoVhyV0=
 </code></pre>
-
-<p>Create a file called &#8220;ceph-test.yaml&#8221;, which will contain definitions of the Secret, Volume, VolumeClaim, and ReplicationController. We will mount the &#8220;rbd/vol01&#8221; test volume created in the prior step into any test Container (in our case, nginx).</p>
-
+<p>Create a file called “ceph-test.yaml”, which will contain definitions of the Secret, Volume, VolumeClaim, and ReplicationController. We will mount the “rbd/vol01” test volume created in the prior step into any test Container (in our case, nginx).</p>
 <pre><code>---
 
 # Replace the following configuration items
@@ -927,30 +818,22 @@ spec:
           persistentVolumeClaim:
             claimName: ceph-vol01
 </code></pre>
-
-<p>Create the resources defined within &#8220;ceph-test.yaml&#8221;</p>
-
+<p>Create the resources defined within “ceph-test.yaml”</p>
 <pre><code>cat ceph-test.yaml | kubectl create -f -
 </code></pre>
-
 <p>Check that the nginx Pod/Container is running, and locate its name to use in the next command</p>
-
 <pre><code>kubectl get po
 # NAME                           READY     STATUS    RESTARTS   AGE
 # ceph-test-61cks                1/1       Running   0          1s
 </code></pre>
-
-<p>Verify that the earlier-created files are readable within the &#8220;rbd/vol01&#8221; mount inside of the POD/Container</p>
-
+<p>Verify that the earlier-created files are readable within the “rbd/vol01” mount inside of the POD/Container</p>
 <pre><code>kubectl exec -it ceph-test-61cks -- find /data
 # /data
 # /data/lost+found
 # /data/welcome.txt
 # /data/urandom.bin
 </code></pre>
-
 <p>We now have a functioning Ceph cluster that is mountable by a Kubernetes environment.</p>
-
 <p>If the Pod is destroyed and migrated to a different Kubernetes node, the volume mount will also follow.</p>
 
   

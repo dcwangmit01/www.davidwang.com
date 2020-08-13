@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>Secure OpenVPN Routing between Multiple Networks using DD-WRT &middot; David C Wang</title>
 
@@ -268,59 +268,48 @@
 
 </div>
 
-  
-
-<h2 id="description">Description</h2>
-
+  <h2 id="description">Description</h2>
 <p>I&rsquo;ve created a secure routed VPN network between all of my family&rsquo;s home networks.  Here&rsquo;s what it looks like, followed by how I did it.</p>
-
 <p><strong>DD-WRT Network Diagram</strong>
 <figure>
     <img src="ddwrt_openvpn.png"/> 
 </figure>
 </p>
-
 <p>Here&rsquo;s an overview of the components:</p>
-
 <ul>
 <li>Home Network
-
 <ul>
 <li>OpenVPN concentrator</li>
 <li>Netgear WNR3500L (480Mhz CPU, 8MB Flash, 64MB RAM)</li>
 <li>DD-WRT Mega/Big (Includes OpenVPN), with jffs enabled</li>
 <li>Local Network: 192.168.1.0/24</li>
 <li>Dynamic DNS: xxxx.dyndns.org</li>
-</ul></li>
+</ul>
+</li>
 <li>Remote Client Networks 1 and 2
-
 <ul>
 <li>OpenVPN client</li>
 <li>Linksys WRT54G (266Mhz CPU, 4MB Flash, 16MB RAM)</li>
 <li>DD-WRT VPN (Includes OpenVPN), with jffs enabled</li>
 <li>Client Network 1
-
 <ul>
 <li>Local Network: 192.168.2.0/24</li>
 <li>Dynamic DNS: yyyy.dyndns.org</li>
-</ul></li>
+</ul>
+</li>
 <li>Client Network 2
-
 <ul>
 <li>Local Network: 192.168.3.0/24</li>
 <li>Dynamic DNS: zzzz.dyndns.org</li>
-</ul></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="generate-the-certificates">Generate the Certificates</h2>
-
 <p>First, install OpenVPN on your development machine</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install openvpn</code></pre></div>
-
 <p>Second, run this little script to create a server certificate and several client certificates. These certificates will be directly used in the OpenVPN concentrator and client configuration files.  You will need a single unique client certificate for every OpenVPN client that will connect to the OpenVPN server. When running this script, accept defaults for all of the prompts.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
 </span><span style="color:#75715e"></span>
 mydir<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>pwd<span style="color:#e6db74">`</span>
@@ -355,16 +344,11 @@ yes <span style="color:#e6db74">&#34;&#34;</span> | ./build-ca
 ./build-key client9
 ./build-key-server server
 ./build-dh</code></pre></div>
-
 <h2 id="home-network-openvpn-concentrator">Home Network OpenVPN Concentrator</h2>
-
 <p>Add the following to DD-WRT -&gt; Administration -&gt; Commands -&gt; Startup</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sleep <span style="color:#ae81ff">15</span>
 cat /jffs/openvpn_server.txt | sh</code></pre></div>
-
 <p>Customize and copy the file contents under the DD-WRT flash path: /jffs/openvpn_server.txt.</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/openvpn/ccd
 echo <span style="color:#e6db74">&#39;
 </span><span style="color:#e6db74">#!/bin/sh
@@ -456,11 +440,8 @@ echo <span style="color:#e6db74">&#39;
 chmod a+x /tmp/etc/openvpn/openvpn.sh
 cd /tmp/etc/openvpn
 ./openvpn.sh</code></pre></div>
-
 <h2 id="remote-network-openvpn-clients">Remote Network OpenVPN Clients</h2>
-
 <p>Add the following to DD-WRT -&gt; Administration -&gt; Commands -&gt; Startup</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/openvpn
 echo <span style="color:#e6db74">&#39;
 </span><span style="color:#e6db74">#!/bin/sh

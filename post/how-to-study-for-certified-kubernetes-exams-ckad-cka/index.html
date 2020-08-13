@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>How to Study for the Certified Kubernetes Exams - CKAD and CKA &middot; David C Wang</title>
 
@@ -268,75 +268,63 @@
 
 </div>
 
-  
-
-<h2 id="intro">Intro</h2>
-
+  <h2 id="intro">Intro</h2>
 <p>At work, we&rsquo;ve asked our team members to pass the official Linux Foundation certification exams for Kubernetes.  The exams are challenging, practical, and realistic. They serve perfectly as a <em>minimum</em> bar for our engineers who work with Kubernetes.  The exams don&rsquo;t cover <em>everything</em> that is typically needed to manage a Kubernetes cluster (e.g. helm, helmfile, etc.), but they do ensure that an engineer demonstrates basic competence.</p>
-
 <h2 id="the-ckad-and-cka-exams">The CKAD and CKA Exams</h2>
-
 <p>The exams are:</p>
-
 <ul>
 <li><strong>Certified Kubernetes Application Developer (CKAD)</strong> covers the basics of how to configure, deploy, and debug applications within a Kubernetes cluster.</li>
 <li><strong>Certified Kubernetes Administrator (CKA)</strong> covers all of the material from the CKAD, as well as the basics of how to configure, deploy, and debug the Kubernetes cluster-level infrastructure itself including masters, nodes, kubelet, scheduler, etcd.  The CKA is more difficult than the CKAD.</li>
 </ul>
-
 <p>The certifications are taken online with a live human proctor via webcam, screensharing, and web browser.  The CKAD is a 2 hour exam with a 66% score required to pass, while the CKA is a 3 hour exam with a 74% score required to pass.  Both exams require the user to interact and solve problems on real Kubernetes deployments at the command line using the <code>kubectl</code> utility.  The exams are realistic, and do define a minimum bar.  The exam fee is $300 before applying easily found discount codes.</p>
-
 <h2 id="how-hard-are-the-exams">How Hard are the Exams?</h2>
-
 <p>Individuals on our team have taken anywhere between 1 day and 1 week to study.  We all passed the exams on first attempts.  We all have significant experience with Kubernetes.</p>
-
 <p>One team member prepared for 1 day and was able to pass both exams, taking the harder CKA first.  The other team members took up to 1 week to prepare, but felt much more confident after taking the exams.</p>
-
 <p>Please note that there isn&rsquo;t much risk to failing the exam, because an exam re-take is included without additional cost if you have registered for the exam directly on <a href="https://www.cncf.io">https://www.cncf.io</a>.</p>
-
 <h2 id="how-to-study">How to Study</h2>
-
 <ul>
 <li>Read through the exam handbook and /
-
 <ul>
 <li><a href="https://www.cncf.io/certification/candidate-handbook">https://www.cncf.io/certification/candidate-handbook</a></li>
 <li><a href="https://www.cncf.io/certification/tips/">https://www.cncf.io/certification/tips/</a></li>
-</ul></li>
+</ul>
+</li>
 <li>Take the CKAD before the CKA.
-
 <ul>
 <li>The CKAD is easier, and requires a lower passing score</li>
 <li>The CKA includes everything on the CKAD, plus cluster admin tasks</li>
-</ul></li>
+</ul>
+</li>
 <li>Get comfortable with the linux terminal.
-
 <ul>
 <li>Each exam is live at a single linux terminal</li>
 <li>Know how to type quickly</li>
 <li>Know how to use a terminal multiplexor such as <code>screen</code> or <code>tmux</code></li>
 <li>Know how to use an editor such as <code>vi</code> or <code>emacs</code></li>
-</ul></li>
+</ul>
+</li>
 <li>Run through the CKAD exercises here:
-
 <ul>
 <li><a href="https://github.com/dgkanatsios/CKAD-exercises">https://github.com/dgkanatsios/CKAD-exercises</a></li>
-</ul></li>
+</ul>
+</li>
 <li>(CKA-only) Practice Kubernetes the Hard Way
-
 <ul>
 <li><a href="https://github.com/kelseyhightower/kubernetes-the-hard-way">https://github.com/kelseyhightower/kubernetes-the-hard-way</a></li>
-</ul></li>
+</ul>
+</li>
 <li>If you wish to experience the web browser linux shell which is the primary interface to the exam, you may setup GateOne.
-
 <ul>
 <li>Docker image: <a href="https://hub.docker.com/r/dcwangmit01/gateone">https://hub.docker.com/r/dcwangmit01/gateone</a></li>
-<li>Source code: <a href="https://github.com/dcwangmit01/gateone">https://github.com/dcwangmit01/gateone</a></li>
+<li>Source code: <a href="https://github.com/dcwangmit01/gateone">https://github.com/dcwangmit01/gateone</a>
+<ul>
 <li>Forked, because the original wouldn&rsquo;t build and seems to be unmaintained.</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="exam-tips">Exam Tips</h2>
-
 <ul>
 <li>Get comfortable with <code>kubectl</code> and its tab completion.</li>
 <li>(CKA-only) Get comfortable with <code>ssh</code></li>
@@ -345,33 +333,31 @@
 <li>Be familiar with <code>kubectl explain ...</code></li>
 <li>Save your nodes and yaml snippets as you go along, since you can reuse them for later questions (e.g. <code>question1-pod.yaml</code>)</li>
 <li>Work quickly and only double-check if necessary.
-
 <ul>
 <li>Each exam is conducted under serious time pressure.</li>
 <li>Most of us ran out of time and were unable to address every single exam question.</li>
-</ul></li>
+</ul>
+</li>
 <li>You are allowed bookmarks in your Chrome web browser.</li>
 </ul>
-
 <h2 id="links">Links</h2>
-
 <ul>
 <li>CKA Registration Link
-
 <ul>
 <li><a href="https://www.cncf.io/certification/cka/">https://www.cncf.io/certification/cka/</a></li>
-</ul></li>
+</ul>
+</li>
 <li>CKAD Registration Link
-
 <ul>
 <li><a href="https://www.cncf.io/certification/ckad/">https://www.cncf.io/certification/ckad/</a></li>
-</ul></li>
+</ul>
+</li>
 <li>Discount codes for Linux Foundation Exams
-
 <ul>
 <li>We were able to get 15% off</li>
 <li><a href="https://www.retailmenot.com/view/training.linuxfoundation.org">https://www.retailmenot.com/view/training.linuxfoundation.org</a></li>
-</ul></li>
+</ul>
+</li>
 </ul>
 
   

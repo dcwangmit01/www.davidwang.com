@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>Tunneling pop3/smtp to gmail SSL pop3s/smtps using xinetd on Linux &middot; David C Wang</title>
 
@@ -269,11 +269,8 @@
 </div>
 
   <p>My Brother MFC-9840cdw multi-functional printer/scanner/coper/fax can scan to email. However gmail requires SSL, which the printer is not able to support. Using xinetd and openssl, my Linux machine is able to proxy local pop3 requests to gmail&rsquo;s SSL pop3s service, and local smtp requests to gmail&rsquo;s SSL smtps service.</p>
-
 <p>Here are the basics on what you need. These ideas are not original.</p>
-
 <p>Tunneling smtp to smtps</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">xinetd</span>: <span style="color:#a6e22e">tunnel</span> <span style="color:#a6e22e">local</span> <span style="color:#a6e22e">smtp</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">gmail</span> <span style="color:#a6e22e">smtps</span>
 
 <span style="color:#a6e22e">service</span> <span style="color:#a6e22e">smtp</span>
@@ -305,9 +302,7 @@
 <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#ae81ff">5</span>) <span style="color:#a6e22e">Test</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">tunnel</span>
 <span style="color:#960050;background-color:#1e0010">#</span>      <span style="color:#a6e22e">telnet</span> <span style="color:#a6e22e">localhost</span> <span style="color:#ae81ff">25</span>
 <span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#ae81ff">6</span>) <span style="color:#a6e22e">Point</span> <span style="color:#a6e22e">your</span> <span style="color:#a6e22e">mail</span> <span style="color:#a6e22e">smtp</span> <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">here</span></code></pre></div>
-
 <p>Tunneling pop3 to pop3s</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">xinetd</span>: <span style="color:#a6e22e">tunnel</span> <span style="color:#a6e22e">local</span> <span style="color:#a6e22e">pop3</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">gmail</span> <span style="color:#a6e22e">pop3s</span>
 
 <span style="color:#a6e22e">service</span> <span style="color:#a6e22e">pop3</span>

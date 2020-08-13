@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
-  <meta name="generator" content="Hugo 0.59.0" />
+  <meta name="generator" content="Hugo 0.74.3" />
 
   <title>Cisco VPN Client on DD-WRT Wireless Router &middot; David C Wang</title>
 
@@ -269,28 +269,21 @@
 </div>
 
   <p>If you connect to a network served by a Cisco VPN concentrator, then you can run the Cisco VPN client on a router, instead of your computer. Running Cisco VPN on a router creates several advantages:</p>
-
 <ul>
 <li>Masquerades (NAT) the local network so that all computers behind the router can access the VPN network</li>
 <li>Re-connects on dropped connections.</li>
 <li>Splits and sends only traffic destined to the foreign network over the VPN connection.</li>
 </ul>
-
 <p>Requirements:</p>
-
 <ul>
 <li>Router that supports DD-WRT: Netgear WNR3500L</li>
 <li>DD-WRT Firmware containing vpnc: dd-wrt.v24-14311_NEWD-2_K2.6_openvpn.bin</li>
 <li>Journaling Flash Filesystem (JFFS) enabled on the router</li>
 </ul>
-
 <p>Add the following to the startup script under Administration -&gt; Commands -&gt; Startup</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sleep <span style="color:#ae81ff">15</span>
 cat /jffs/vpnc.txt | sh</code></pre></div>
-
 <p>Create the file /jffs/vpnc.txt on the router</p>
-
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /tmp/etc/vpnc
 echo <span style="color:#e6db74">&#39;
 </span><span style="color:#e6db74">#!/bin/sh 
